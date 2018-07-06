@@ -272,11 +272,11 @@ prepared for CRETE. Also, I will use __echo__ from _GNU CoreUtils_ as the target
 binary under test.
 
 >#### General flow of execution
-1. Boot the VM image using native qemu with kvm-enabled and provide configuration files
-2. Save the snapshot of the VM image
-3. Using crete-qemu, boot the image with snapshot *** do not add option '-enable-kvm', this will disable crete functionality because crete does not support KVM ***
-4. Provide CRETE front-end configuration file
-5. Provide CRETE back-end configuration file(s)
+>1. Boot the VM image using native qemu with kvm-enabled and provide configuration files
+>2. Save the snapshot of the VM image
+>3. Using crete-qemu, boot the image with snapshot *** do not add option '-enable-kvm', this will disable crete functionality because crete does not support KVM ***
+>4. Provide CRETE front-end configuration file
+>5. Provide CRETE back-end configuration file(s)
 
 ### 4.1 Setting-up the Test on the Guest OS
 #### Provide a configuration file for the target binary
