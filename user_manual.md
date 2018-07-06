@@ -120,6 +120,15 @@ all setups on the guest VM image.
 
 Native qemu can be attained by compiling the source code provided on on the qemu website. In this user manual, native qemu commands will be signified with _native-qemu_ in place of _qemu_ to distinguish them from default qemu commands.
 
+### 3.0 Building QEMU from Source code
+
+```bash
+$ wget https://download.qemu.org/qemu-2.3.0.tar.xz
+$ tar xvJf qemu-2.3.0.tar.xz
+$ cd qemu-2.3.0
+$ ./configure
+$ make
+```
 ### 3.1. Create a QEMU Image
 
 ```bash
@@ -258,6 +267,13 @@ binaries. In this section, I will use "crete-demo.img" as the VM image
 prepared for CRETE. Also, I will use __echo__ from _GNU CoreUtils_ as the target
 binary under test.
 
+### 4.0 General flow of execution
+1. Boot the VM image using native qemu with kvm-enabled and provide configuration files
+2. Save the snapshot of the VM image
+3. Using crete-qemu, boot the image with snapshot *** do not add option '-enable-kvm', this will disable crete functionality because crete does not support KVM ***
+4. Provide CRETE front-end configuration file
+5. Provide CRETE back-end configuration file(s)
+
 ### 4.1 Setting-up the Test on the Guest OS
 #### Provide a configuration file for the target binary
 Boot the VM image using native qemu without kvm-enabled first:
@@ -378,6 +394,9 @@ A sample configuration file, _crete.svm-node.xml_, for _crete-svm-node_ is:
 ```xml
 <crete>
     <svm>
+        <path>
+               <symbolic>/path-to-crete-build/bin/crete-klee-1.4.0</symbolic>
+        </path>
         <count>1</count>
     </svm>
     <master>
