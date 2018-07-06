@@ -271,7 +271,7 @@ binaries. In this section, I will use "crete-demo.img" as the VM image
 prepared for CRETE. Also, I will use __echo__ from _GNU CoreUtils_ as the target
 binary under test.
 
-### 4.0 General flow of execution
+>### 4.0 General flow of execution
 1. Boot the VM image using native qemu with kvm-enabled and provide configuration files
 2. Save the snapshot of the VM image
 3. Using crete-qemu, boot the image with snapshot *** do not add option '-enable-kvm', this will disable crete functionality because crete does not support KVM ***
