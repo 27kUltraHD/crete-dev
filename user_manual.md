@@ -144,7 +144,7 @@ details.
 
 ### 3.2. Install the Guest OS
 
-native-qemu-system-x86_64 can be found: ```bash/path-to-qemu-2.3.0/x86_64-linux-user/qemu-system-x86_64```
+native-qemu-system-x86_64 can be found: ```/path-to-qemu-2.3.0/x86_64-linux-user/qemu-system-x86_64```
 
 ```bash
 $ native-qemu-system-x86_64 -hda <img-name>.img -m <memory> -k en-us -enable-kvm -cdrom <iso-name>.iso -boot d
