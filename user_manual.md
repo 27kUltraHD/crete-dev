@@ -122,6 +122,8 @@ Native qemu can be attained by compiling the source code provided on on the qemu
 
 ### 3.0 Building QEMU from Source code
 
+In this case, we are installing qemu-2.3.0
+
 ```bash
 $ wget https://download.qemu.org/qemu-2.3.0.tar.xz
 $ tar xvJf qemu-2.3.0.tar.xz
@@ -141,6 +143,8 @@ page](http://en.wikibooks.org/wiki/QEMU/Images#Creating_an_image) for more
 details.
 
 ### 3.2. Install the Guest OS
+
+this native-qemu-system-x86_64 is actually /path-to-qemu-2.3.0/x86_64-linux-user/qemu-system-x86_64
 
 ```bash
 $ native-qemu-system-x86_64 -hda <img-name>.img -m <memory> -k en-us -enable-kvm -cdrom <iso-name>.iso -boot d
