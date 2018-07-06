@@ -98,8 +98,8 @@ echo export PATH='$PATH':`readlink -f ./bin` >> ~/.bashrc
 echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin` >> ~/.bashrc
 echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin/boost` >> ~/.bashrc
 source ~/.bashrc
-```
 
+```
 At this point, you're all set with building CRETE!
 
 ## 3. Preparing the Guest Operating System
@@ -145,7 +145,6 @@ details.
 ### 3.2. Install the Guest OS
 
 native-qemu-system-x86_64 can be found: ```bash/path-to-qemu-2.3.0/x86_64-linux-user/qemu-system-x86_64```
-:w
 
 ```bash
 $ native-qemu-system-x86_64 -hda <img-name>.img -m <memory> -k en-us -enable-kvm -cdrom <iso-name>.iso -boot d
