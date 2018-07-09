@@ -490,7 +490,6 @@ concolic:
 
 ### crete-dispatch configuration
 
-```xml
 Currently, CRETE can be run in two modes:
 - Developer
 - Distributed
@@ -501,6 +500,7 @@ distributed mode allows us run CRETE on multiple programs
 
 *note* While running CRETE in developer mode, QEMU will exit after running crete. On the other hand, distributed will restart qemu everytime it is finished running tests.
 
+```xml
 <crete>
     <mode>developer</mode>
     <vm>
@@ -531,19 +531,25 @@ distributed mode allows us run CRETE on multiple programs
         <interval>10</interval>
     </profile>
 </crete>
+```
 
 A brief explaination of each pertinent node is as follows (See 5. CRETE Configuration Options for more information):
 
+```xml
 <mode>developer</mode>
+```
 
 *Set the mode to developer
 
+```xml
 <vm>
         <arch>x64</arch>
 </vm>
+```
 
 *Describes the architecture of the guestOS's machine
 
+```xml
 <svm>
 	<args>
 		<symbolic>
@@ -553,9 +559,11 @@ A brief explaination of each pertinent node is as follows (See 5. CRETE Configur
 		</symbolic>
 	</args>
 </svm>
+```
 
 *Desribes the symbolic arguments the user want to use.
 
+```xml
 <test>
         <interval>
             <trace>10000</trace>
@@ -563,6 +571,7 @@ A brief explaination of each pertinent node is as follows (See 5. CRETE Configur
             <time>900</time>
         </interval>
 </test>
+```
 
 *This section describes how many tests to run and how long to wait to terminate main task
 
@@ -570,14 +579,17 @@ A brief explaination of each pertinent node is as follows (See 5. CRETE Configur
 - tc:
 - time: Time to wait before stopping automatically.
 
+```xml
 <profile>
         <interval>10</interval>
 </profile>
+```
 
 Distributed Mode
 
 There will be some minor differences in our markup
 
+```xml
 <crete>
     <mode>distributed</mode>
     <vm>
@@ -616,27 +628,36 @@ There will be some minor differences in our markup
         <interval>10</interval>
     </profile>
 </crete>
+```
 
 We need to specify the path to our image.
 
+```xml
 <image>
         <path>/path-to/crete_ubuntu_x86.img</path>
         <update>false</update>
 </image>
+```
 
 Then, we need to enter the name of the snapshot we saved earlier:
 
+```xml
 <snapshot>test</snapshot>
+```
 
 We removed the option to randomize the fork under symbolic arguments
 We removed: --randomize-fork=false
 
 We now include the programs we want to run tests on
+
+```xml
 <items>
               <item>/home/test/haison/crete.demo.echo.xml</item>
 </items>
+```
 
 If we were to run multiple tests
+```xml
 <items>
 	<item>/home/test/haison/crete.demo.echo.xml</item>
 	<item>/path-to-item2</item>
