@@ -374,6 +374,8 @@ A sample configuration file, _crete.dispatch.xml_, for _crete-dispatch_ is:
 Start _crete-dispatch_ with the sample configuration file:
 ```bash
 $ crete-dispatch -c crete.dispatch.xml
+
+*More information about the markup can be found in section 5
 ```
 #### Start crete-vm-node on the Host OS:
 A sample configuration file, _crete.vm-node.xml_, for _crete-vm-node_ is:
@@ -489,24 +491,157 @@ concolic:
 ### crete-dispatch configuration
 
 ```xml
+Currently, CRETE can be run in two modes:
+- Developer
+- Distributed
+
+developer mode allows us to run CRETE on one specific program
+
+distributed mode allows us run CRETE on multiple programs
+
+*note* While running CRETE in developer mode, QEMU will exit after running crete. On the other hand, distributed will restart qemu everytime it is finished running tests.
+
 <crete>
-    <mode>string</mode>
+    <mode>developer</mode>
     <vm>
         <arch>x64</arch>
     </vm>
     <svm>
         <args>
-	    <symbolic>
-	        --search="<string>" --check-overshift="<bool>" --use-cex-cache --use-forked-solver --simplify-sym-indices --max-time="<double>" --max-instruction-time="<double>" --max-memory="<uint>"
-	    </symbolic>
-	</args>
+            <symbolic>
+                --max-memory=1000
+                --disable-inlining
+                --use-forked-solver
+                --max-sym-array-size=4096
+                --max-instruction-time=5
+                --max-time=150
+                --randomize-fork=false
+                --search=dfs
+            </symbolic>
+        </args>
     </svm>
     <test>
-	<interval>
-	    <trace>uint</trace>
-	</interval>
+        <interval>
+            <trace>10000</trace>
+            <tc>10000</tc>
+            <time>900</time>
+        </interval>
     </test>
+    <profile>
+        <interval>10</interval>
+    </profile>
 </crete>
+
+A brief explaination of each pertinent node is as follows (See 5. CRETE Configuration Options for more information):
+
+<mode>developer</mode>
+
+*Set the mode to developer
+
+<vm>
+        <arch>x64</arch>
+</vm>
+
+*Describes the architecture of the guestOS's machine
+
+<svm>
+	<args>
+		<symbolic>
+		...
+		...
+		...
+		</symbolic>
+	</args>
+</svm>
+
+*Desribes the symbolic arguments the user want to use.
+
+<test>
+        <interval>
+            <trace>10000</trace>
+            <tc>10000</tc>
+            <time>900</time>
+        </interval>
+</test>
+
+*This section describes how many tests to run and how long to wait to terminate main task
+
+- trace: # of tests to run before stopping
+- tc:
+- time: Time to wait before stopping automatically.
+
+<profile>
+        <interval>10</interval>
+</profile>
+
+Distributed Mode
+
+There will be some minor differences in our markup
+
+<crete>
+    <mode>distributed</mode>
+    <vm>
+      <image>
+        <path>crete_ubuntu_x86.img</path>
+        <update>false</update>
+      </image>
+      <arch>x64</arch>
+      <snapshot>test</snapshot>
+      <args>-m 256 -monitor telnet:127.0.0.1:1234,server,nowait</args>
+    </vm>
+    <svm>
+        <args>
+            <symbolic>
+                --max-memory=1000
+                --disable-inlining
+                --use-forked-solver
+                --max-sym-array-size=4096
+                --max-instruction-time=5
+                --max-time=150
+                --search=dfs
+            </symbolic>
+        </args>
+    </svm>
+    <test>
+        <interval>
+            <trace>10000</trace>
+            <tc>10000</tc>
+            <time>900</time>
+            <items>
+              <item>/home/test/haison/crete.demo.echo.xml</item>
+            </items>
+        </interval>
+    </test>
+    <profile>
+        <interval>10</interval>
+    </profile>
+</crete>
+
+We need to specify the path to our image.
+
+<image>
+        <path>/path-to/crete_ubuntu_x86.img</path>
+        <update>false</update>
+</image>
+
+Then, we need to enter the name of the snapshot we saved earlier:
+
+<snapshot>test</snapshot>
+
+We removed the option to randomize the fork under symbolic arguments
+We removed: --randomize-fork=false
+
+We now include the programs we want to run tests on
+<items>
+              <item>/home/test/haison/crete.demo.echo.xml</item>
+</items>
+
+If we were to run multiple tests
+<items>
+	<item>/home/test/haison/crete.demo.echo.xml</item>
+	<item>/path-to-item2</item>
+	<item>/path-to-item3</item>
+</items>
 ```
 
 ### crete-vm-node configuration
