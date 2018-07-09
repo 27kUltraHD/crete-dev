@@ -535,11 +535,13 @@ distributed mode allows us run CRETE on multiple programs
 
 A brief explaination of each pertinent node is as follows (See 5. CRETE Configuration Options for more information):
 
+Set the mode to developer
+
 ```xml
 <mode>developer</mode>
 ```
 
-*Set the mode to developer
+Describes the architecture of the guestOS's machine
 
 ```xml
 <vm>
@@ -547,7 +549,7 @@ A brief explaination of each pertinent node is as follows (See 5. CRETE Configur
 </vm>
 ```
 
-*Describes the architecture of the guestOS's machine
+Desribes the symbolic arguments the user want to use.
 
 ```xml
 <svm>
@@ -561,7 +563,11 @@ A brief explaination of each pertinent node is as follows (See 5. CRETE Configur
 </svm>
 ```
 
-*Desribes the symbolic arguments the user want to use.
+This section describes how many tests to run and how long to wait to terminate main task
+
+- trace: # of tests to run before stopping
+- tc:
+- time: Time to wait before stopping automatically.
 
 ```xml
 <test>
@@ -571,18 +577,6 @@ A brief explaination of each pertinent node is as follows (See 5. CRETE Configur
             <time>900</time>
         </interval>
 </test>
-```
-
-*This section describes how many tests to run and how long to wait to terminate main task
-
-- trace: # of tests to run before stopping
-- tc:
-- time: Time to wait before stopping automatically.
-
-```xml
-<profile>
-        <interval>10</interval>
-</profile>
 ```
 
 Distributed Mode
@@ -599,7 +593,7 @@ There will be some minor differences in our markup
       </image>
       <arch>x64</arch>
       <snapshot>test</snapshot>
-      <args>-m 256 -monitor telnet:127.0.0.1:1234,server,nowait</args>
+      <args>-m 256</args>
     </vm>
     <svm>
         <args>
