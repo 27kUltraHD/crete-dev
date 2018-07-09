@@ -563,9 +563,8 @@ Desribes the symbolic arguments the user want to use.
 
 This section describes how many tests to run and how long to wait to terminate main task
 
-- trace: # of tests to run before stopping
-- tc:
-- time: Time to wait before stopping automatically.
+- trace: number of tests to run before stopping
+- time: Time to wait before stopping automatically (in seconds).
 
 ```xml
 <test>
@@ -577,9 +576,9 @@ This section describes how many tests to run and how long to wait to terminate m
 </test>
 ```
 
-Distributed Mode
+###Distributed Mode
 
-There will be some minor differences in our markup
+There will be some minor differences in the markup
 
 ```xml
 <crete>
@@ -640,7 +639,7 @@ Then, we need to enter the name of the snapshot we saved earlier:
 We removed the option to randomize the fork under symbolic arguments
 We removed: --randomize-fork=false
 
-We now include the programs we want to run tests on
+We now include the programs (items) we want to run tests on
 
 ```xml
 <items>
@@ -648,7 +647,7 @@ We now include the programs we want to run tests on
 </items>
 ```
 
-If we were to run multiple tests
+If we were to run multiple tests then we would have multiple items under the items tag
 ```xml
 <items>
 	<item>/home/test/haison/crete.demo.echo.xml</item>
