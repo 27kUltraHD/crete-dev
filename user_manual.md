@@ -1,6 +1,5 @@
 # CRETE User Guide
 
-
 [![Build Status](https://travis-ci.org/SVL-PSU/crete-dev.svg?branch=master)](https://travis-ci.org/SVL-PSU/crete-dev)
 
 ## 1. Prerequisites
@@ -17,11 +16,10 @@ Guest Operating System (guest OS)
 
 ### 1.2. Unix/Linux Knowledge
 A modest familiarity with Unix-style systems is required. You must be able to
-make your way around the system in a terminal and interact with files from
+navigate your way around the system in a terminal and interact with files from
 command line.
 
 ### 1.3. Operating System
-
 CRETE requires the use of [Ubuntu
 12.04-amd64](http://releases.ubuntu.com/12.04/ubuntu-12.04.5-desktop-amd64.iso)
 or [Ubuntu
@@ -36,7 +34,6 @@ have been tested.
 ## 2. Building CRETE
 
 ### 2.1 Dependencies
-
 The following apt-get packages are required:
 ```bash
 sudo apt-get update
@@ -48,6 +45,7 @@ itself is recommended. Please check [LLVM Package
 Repository](http://apt.llvm.org/) for details. For the recent Ubuntu (≥ 12.04
 and ≤ 15.10, e.g. 14.04 LTS) or Debian, please use the following instructions to
 install LLVM 3.4:
+
 ```bash
 echo "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.4 main" | sudo tee -a /etc/apt/sources.list
 echo "deb-src http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.4 main" | sudo tee -a /etc/apt/sources.list
@@ -58,9 +56,9 @@ sudo apt-get install clang-3.4 llvm-3.4 llvm-3.4-dev llvm-3.4-tools
 
 ### 2.2 Building
 >#### Warning
->
+
 > CRETE uses Boost 1.59.0. If any other version of Boost is installed on the system, there may be conflicts. It is recommended that you remove any conflicting Boost versions.
->
+
 >#### Note
 > CRETE requires a C++11 compatible compiler.
 > We recommend clang++-3.4 or g++-4.9 or higher versions of these compilers.
@@ -115,10 +113,10 @@ At this point, you're all set with building CRETE!
 
 The front-end of CRETE is an instrumented VM (crete-qemu). You need
 to setup a QEMU-compatible VM image to perform a certain test upon
-CRETE. To get the best performance, native qemu with kvm enabled should be used for
+CRETE. To get the best performance,   qemu with kvm enabled should be used for
 all setups on the guest VM image. 
 
-Native qemu can be attained by compiling the source code provided on on the qemu website. In this user manual, native qemu commands will be signified with _native-qemu_ in place of _qemu_ to distinguish them from default qemu commands.
+  qemu can be attained by compiling the source code provided on on the qemu website. In this user manual,   qemu commands will be signified with _qemu_ default qemu commands.
 
 ### 3.0 Building QEMU from Source code
 
@@ -144,10 +142,10 @@ details.
 
 ### 3.2. Install the Guest OS
 
-native-qemu-system-x86_64 can be found: ```/path-to-qemu-2.3.0/x86_64-linux-user/qemu-system-x86_64```
+qemu-system-x86_64 can be found: ```/path-to-qemu-2.3.0/x86_64-linux-user/qemu-system-x86_64```
 
 ```bash
-$ native-qemu-system-x86_64 -hda <img-name>.img -m <memory> -k en-us -enable-kvm -cdrom <iso-name>.iso -boot d
+$ qemu-system-x86_64 -hda <img-name>.img -m <memory> -k en-us -enable-kvm -cdrom <iso-name>.iso -boot d
 ```
 Where &lt;memory&gt; is the amount of RAM in Megabytes, &lt;img-name&gt; is the
 name of the image just created, and &lt;iso-name&gt; is the name of the .iso used to install Ubuntu. The iso of ubuntu-12.04.5-server-amd64, for
@@ -162,7 +160,7 @@ more boot options.
 Once the OS is installed to the image, it can be booted with:
 
 ```bash
-$ native-qemu-system-x86_64 -hda <img-name>.img -m <memory> -k en-us -enable-kvm
+$ qemu-system-x86_64 -hda <img-name>.img -m <memory> -k en-us -enable-kvm
 
 ```
 
@@ -233,7 +231,7 @@ loading snapshots.
 >#### Load Snapshot
 >To load a snapshot while launching QEMU from the host OS:
 >```bash
->$  native-qemu-system-x86_64 -hda <img-name>.img -m <memory> -k en-us -loadvm <snapshot-name>
+>$  qemu-system-x86_64 -hda <img-name>.img -m <memory> -k en-us -loadvm <snapshot-name>
 >```
 >Note that the boot command of QEMU that loads a snapshot has to stay consistent with
 the boot command of QEMU while saving snapshot, such as using the same <memory>
@@ -272,7 +270,7 @@ prepared for CRETE. Also, I will use __echo__ from _GNU CoreUtils_ as the target
 binary under test.
 
 >#### General flow of execution
->1. Boot the VM image using native qemu with kvm-enabled and provide configuration files
+>1. Boot the VM image using qemu with kvm-enabled and provide configuration files
 >2. Save the snapshot of the VM image
 >3. Using crete-qemu, boot the image with snapshot *** do not add option '-enable-kvm', this will disable crete functionality because crete does not support KVM ***
 >4. Provide CRETE front-end configuration file
@@ -280,9 +278,9 @@ binary under test.
 
 ### 4.1 Setting-up the Test on the Guest OS
 #### Provide a configuration file for the target binary
-Boot the VM image using native qemu without kvm-enabled first:
+Boot the VM image using qemu without kvm-enabled first:
 ```bash
-$ native-qemu-system-x86_64 -hda crete-demo.img -m 256 -k en-us
+$ qemu-system-x86_64 -hda crete-demo.img -m 256 -k en-us
 ```
 A sample configuration file, _crete.demo.echo.xml_, for _echo_ is given as follows :
 ```xml
@@ -311,7 +309,7 @@ on the target binary.
 
 We take advantage of the snapshot functionality of qemu to boost the process of
 booting the guest OS by using _crete-qemu_. We first save a snapshot and quit
-from the native qemu by:
+from the   qemu by:
 ```bash
 ctrl+alt+2
 $ savevm test
@@ -494,9 +492,9 @@ Currently, CRETE can be run in two modes:
 - Developer
 - Distributed
 
-developer mode allows us to run CRETE on one specific program
+Developer mode allows us to run CRETE on one specific program
 
-distributed mode allows us run CRETE on multiple programs
+Distributed mode allows us run CRETE on multiple programs
 
 *note* While running CRETE in developer mode, QEMU will exit after running crete. On the other hand, distributed will restart qemu everytime it is finished running tests.
 
@@ -533,7 +531,7 @@ distributed mode allows us run CRETE on multiple programs
 </crete>
 ```
 
-A brief explaination of each pertinent node is as follows (See 5. CRETE Configuration Options for more information):
+A brief explaination of each pertinent node is as follows:
 
 Set the mode to developer
 
