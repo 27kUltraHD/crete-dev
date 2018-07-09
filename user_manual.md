@@ -576,7 +576,7 @@ This section describes how many tests to run and how long to wait to terminate m
 </test>
 ```
 
-###Distributed Mode
+### Distributed Mode
 
 There will be some minor differences in the markup
 
