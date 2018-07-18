@@ -33,6 +33,59 @@ have been tested.
 
 ## 2. Building CRETE
 
+You can build CRETE distributed using docker or manually from source code. For manual installation, please skip this section.
+
+### Building CRETE with docker
+
+The version of docker used to test CRETE compatibility is Docker version 18.03.1-ce
+
+There are two ways to obtain a CRETE image.
+
+#### Pulling from Docker hub
+
+To pull down the latest build of a particular Docker image run:
+
+```bash
+docker pull nhaison/crete
+```
+
+__Note this process pulls images containing code compiled by a third-party service. We do not accept responsibility for the contents of the image.__
+
+#### Building a Docker image locally
+
+build a docker image called 'crete' in the working directory 
+
+```bash
+git clone https://github.com/27kUltraHD/crete-dev
+cd crete-dev
+docker build -t nhaison/crete .
+```
+
+This will use the contents of the __Dockerfile__ in the root of the repository to build the Docker image.
+
+#### Creating a CRETE Docker container
+
+Now that you have a CRETE Docker image you can try creating a container from the image.
+
+```bash
+docker run --rm -ti --ulimit='stack=-1:-1' nhaison/crete
+```
+__Note the --ulimit option sets an unlimited stack size inside the container. This is to avoid stack overflow issues when running KLEE.__
+
+If this worked correctly, your shell prompt will have changed and you will be the __root__ user.
+```bash
+root@d62a2428405d:/home# whoami
+root
+root@d62a2428405d:/home# 
+```
+
+Now exit the container
+```bash
+root@d62a2428405d:/home# exit
+```
+
+__Continue to section 4.2.3 for further instructions in running CRETE in distributed mode.__
+
 ### 2.1 Dependencies
 The following apt-get packages are required:
 ```bash
