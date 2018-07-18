@@ -371,10 +371,14 @@ enter
 ```
 ## 4.2.3 Running crete-dispatch
 1. On the hostOS, in a separate terminal window, locate crete.dispatch.xml, it should be found under:
-```xml crete/image_template/crete.dispatch.xml```
+```xml 
+crete/image_template/crete.dispatch.xml
+```
 
 Please make sure the path node in crete.dispatch.xml:
-```xml<path>/home/crete/image_template/vm_node/vm/1/crete.img</path>```
+```xml 
+<path>/home/crete/image_template/vm_node/vm/1/crete.img</path>
+```
 matches the path to your crete.img
 
 2. run crete-dispatch -c crete.dispatch.xml 
@@ -400,7 +404,9 @@ This indicates you ran successfully and now waiting for crete-svm-node
 
 ## 4.2.5 Running crete-svm-node
 1. On the hostOS, in a separate terminal window, locate crete.vm-node.xml, it should be found under:
-```xml crete/image_template/crete.svm-node.xml```
+```xml
+crete/image_template/crete.svm-node.xml
+```
  Please make sure the path node matches the path to your crete-klee-1.4.0
 ```xml
 <path>
