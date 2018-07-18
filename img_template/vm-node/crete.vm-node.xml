@@ -1,0 +1,9 @@
+<crete>
+	<vm>
+		<count>1</count>
+	</vm>
+ 	<master>
+		<ip>localhost</ip>
+		<port>10012</port>
+	</master>
+</crete>

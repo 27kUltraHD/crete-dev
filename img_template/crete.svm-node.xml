@@ -1,0 +1,12 @@
+<crete>
+    <svm>
+	<path>
+		<symbolic>/home/nguyenhaison/Desktop/crete-build/bin/crete-klee-1.4.0</symbolic>
+	</path>
+        <count>1</count>
+    </svm>
+    <master>
+        <ip>localhost</ip>
+        <port>10012</port>
+    </master>
+</crete>

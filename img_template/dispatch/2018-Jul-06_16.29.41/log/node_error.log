@@ -1,0 +1,13 @@
+[2018-07-06 16:30:26]: Target: /home/haison/crete.echo.xml
+Exception Caught:
+/home/nguyenhaison/Desktop/crete/lib/cluster/vm_node_fsm.cpp(1165): Throw in function bool crete::cluster::node::vm::fsm::QemuFSM_::is_finished::operator()(const EVT &, FSM &, SourceState &, TargetState &) [EVT = crete::cluster::node::vm::ev::poll, FSM = boost::msm::back::state_machine<crete::cluster::node::vm::fsm::QemuFSM_, boost::parameter::void_, boost::parameter::void_, boost::parameter::void_, boost::parameter::void_>, SourceState = crete::cluster::node::vm::fsm::QemuFSM_::Testing, TargetState = crete::cluster::node::vm::fsm::QemuFSM_::StoreTrace]
+Dynamic exception type: boost::exception_detail::clone_impl<crete::cluster::node::vm::VMException>
+std::exception::what: std::exception
+[crete::err::tag_process_exited*] = pid_
+Node: VM
+Target: /home/haison/crete.echo.xml
+VM dir: "vm/1"
+inputs_crete.echo.xml_crash_0.bin being dumped
+
+
+

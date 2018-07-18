@@ -1,0 +1,17 @@
+[2018-07-17 10:12:25]: Target: /home/crete/crete.demo.echo.xml
+Exception Caught:
+/home/nguyenhaison/Desktop/crete/lib/cluster/vm_node_fsm.cpp(1165): Throw in function bool crete::cluster::node::vm::fsm::QemuFSM_::is_finished::operator()(const EVT &, FSM &, SourceState &, TargetState &) [EVT = crete::cluster::node::vm::ev::poll, FSM = boost::msm::back::state_machine<crete::cluster::node::vm::fsm::QemuFSM_, boost::parameter::void_, boost::parameter::void_, boost::parameter::void_, boost::parameter::void_>, SourceState = crete::cluster::node::vm::fsm::QemuFSM_::Testing, TargetState = crete::cluster::node::vm::fsm::QemuFSM_::StoreTrace]
+Dynamic exception type: boost::exception_detail::clone_impl<crete::cluster::node::vm::VMException>
+std::exception::what: std::exception
+[crete::err::tag_process_exited*] = pid_
+Node: VM
+Target: /home/crete/crete.demo.echo.xml
+VM dir: "vm/1"
+inputs_crete.demo.echo.xml_crash_0.bin being dumped
+
+trace-tag-node: 11
+current: tb-14: pc=0x4015a1, last_opc = 0x74, br_taken =  [0 ]
+from tc: tb-14: pc=0x4015a1, last_opc = 0x74, br_taken =  [1 ]
+crete-qemu-2.3-system-x86_64: /home/nguyenhaison/Desktop/crete/front-end/qemu-2.3/runtime-dump/runtime-dump.cpp:1570: void RuntimeEnv::add_trace_tag(const TranslationBlock*, uint64_t): Assertion `0 && "[CRETE ERROR] Inconsistent tracing detected by trace-tag.\n"' failed.
+
+
