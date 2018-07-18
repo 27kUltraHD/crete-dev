@@ -342,11 +342,11 @@ If you want to run __Developer__ mode, please skip section __4.3__. Else, procee
 >6. Save the snapshot fo the VM image as 'test'
 >7. Now you are ready to run crete-dispatch -c crete.dispatch.xml, crete-vm-node -c crete.vm-node.xml (Run this command within vm-node folder), and crete-svm-node -c crete.svm-node.xml (Make sure to run these commands in seperate windows).
 
-## 4.2.1 Image location
+#### 4.2.1 Image location
 Please make sure the image you created is under crete/image_template/vm-node/vm/1/. So, the path should look like:
 ```xml crete/image_template/vm-node/vm/1/crete.img ```
 
-## 4.2.2 Running crete and saving snapshot
+#### 4.2.2 Running crete and saving snapshot
 On your guestOS, please run 'crete-run' without any arguments:
 
 ```bash
@@ -369,7 +369,7 @@ enter
 $ q
 enter
 ```
-## 4.2.3 Running crete-dispatch
+#### 4.2.3 Running crete-dispatch
 1. On the hostOS, in a separate terminal window, locate crete.dispatch.xml, it should be found under:
 ```xml 
 crete/image_template/crete.dispatch.xml
@@ -389,7 +389,7 @@ matches the path to your crete.img
 This indicates you ran successfully and now can run crete-vm-node
 ```
 
-## 4.2.4 Running crete-vm-node
+#### 4.2.4 Running crete-vm-node
 1. On the hostOS, in a separate terminal window, locate crete.vm-node.xml, it should be found under:
 ```xml crete/image_template/vm-node/crete.vm-node.xml```
 
@@ -402,7 +402,7 @@ This indicates you ran successfully and now can run crete-vm-node
 ```
 This indicates you ran successfully and now waiting for crete-svm-node
 
-## 4.2.5 Running crete-svm-node
+#### 4.2.5 Running crete-svm-node
 1. On the hostOS, in a separate terminal window, locate crete.vm-node.xml, it should be found under:
 ```xml
 crete/image_template/crete.svm-node.xml
@@ -422,16 +422,16 @@ crete/image_template/crete.svm-node.xml
 ```
 
 Success! You've ran CRETE in distributed mode
-## 4.2.2 Running crete
-Now, the guest OS is all set and should be waiting for CRETE back-end on the
-host OS to start.
 
-### 4.3 Executing CRETE Back-end on the Host OS (Developer mode)
+
+### 4.3 Executing CRETE Front-end on Guest OS and Back-end on the Host OS (Developer mode)
 
 On the guest OS, execute CRETE guest utility with the guest configuration file:
 ```bash
 $ crete-run -c crete.demo.echo.xml
 ```
+Now, the guest OS is all set and should be waiting for CRETE back-end on the
+host OS to start.
 
 CRETE back-end has three parts: _crete-vm-node_ for managing VM instances,
 _crete-svm-node_ for managing symbolic VM instances, and _crete-dispatch_ for
