@@ -343,8 +343,8 @@ If you want to run __Developer__ mode, please skip section __4.3__. Else, procee
 >7. Now you are ready to run crete-dispatch -c crete.dispatch.xml, crete-vm-node -c crete.vm-node.xml (Run this command within vm-node folder), and crete-svm-node -c crete.svm-node.xml (Make sure to run these commands in seperate windows).
 
 ## 4.2.1 Image location
-Please make sure the image you created is under crete-dev/image_template/vm-node/vm/1/. So, the path should look like:
-```xml crete-dev/image_template/vm-node/vm/1/crete.img ```
+Please make sure the image you created is under crete/image_template/vm-node/vm/1/. So, the path should look like:
+```xml crete/image_template/vm-node/vm/1/crete.img ```
 
 ## 4.2.2 Running crete and saving snapshot
 On your guestOS, please run 'crete-run'without any arguments:
@@ -354,41 +354,45 @@ $ crete-run
 ```
 Save the snapshot under 'test' again.
 
- ctrl+alt+2
+```bash
+ctrl+alt+2
 $ savevm test
 enter
 $ q
 enter
-
+```
 ## 4.2.3 Running crete-dispatch
 1. On the hostOS, in a separate terminal window, locate crete.dispatch.xml, it should be found under:
-```xml crete-dev/image_template/crete.dispatch.xml```
+```xml crete/image_template/crete.dispatch.xml```
 
 Please make sure the path node in crete.dispatch.xml:
-```xml<path>/home/crete-dev/image_template/vm_node/vm/1/crete.img</path>```
+```xml<path>/home/crete/image_template/vm_node/vm/1/crete.img</path>```
 matches the path to your crete.img
 
 2. run crete-dispatch -c crete.dispatch.xml 
 
 3. You should get:
-```xml [CRETE] Awaiting connection on 'symdrive-svl.cs.pdx.edu' on port '10012' ...```
+```xml 
+[CRETE] Awaiting connection on 'symdrive-svl.cs.pdx.edu' on port '10012' ...
 This indicates you ran successfully and now can run crete-vm-node
+```
 
 ## 4.2.4 Running crete-vm-node
 1. On the hostOS, in a separate terminal window, locate crete.vm-node.xml, it should be found under:
-```xml crete-dev/image_template/vm-node/crete.vm-node.xml```
+```xml crete/image_template/vm-node/crete.vm-node.xml```
 
 2. run crete-vm-node -c crete.vm-node.xml 
 
 3. You should get:
-```xml [CRETE] Connecting to master 'localhost' on port '10012' ...
+```xml 
+[CRETE] Connecting to master 'localhost' on port '10012' ...
 // some more information about vm-node test running
 ```
 This indicates you ran successfully and now waiting for crete-svm-node
 
 ## 4.2.5 Running crete-svm-node
 1. On the hostOS, in a separate terminal window, locate crete.vm-node.xml, it should be found under:
-```xml crete-dev/image_template/crete.svm-node.xml```
+```xml crete/image_template/crete.svm-node.xml```
  Please make sure the path node matches the path to your crete-klee-1.4.0
 ```xml
 <path>
@@ -398,7 +402,8 @@ This indicates you ran successfully and now waiting for crete-svm-node
 2. run crete-svm-node -c crete.svm-node.xml 
 
 3. You should get:
-```xml [CRETE] Connecting to master 'localhost' on port '10012' ...
+```xml 
+[CRETE] Connecting to master 'localhost' on port '10012' ...
 // some more information about vm-node tests running
 ```
 
