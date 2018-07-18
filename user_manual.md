@@ -65,7 +65,7 @@ sudo apt-get install clang-3.4 llvm-3.4 llvm-3.4-dev llvm-3.4-tools
 
 Grab a copy of the source tree:
 ```bash
-git clone --recursive https://github.com/SVL-PSU/crete-dev.git crete
+git clone --recursive https://github.com/27kUltraHD/crete-dev crete
 ```
 
 From outside of the CRETE directory:
