@@ -103,7 +103,7 @@ At this point, you're all set with building CRETE!
 ## 3. Preparing the Guest Operating System
 >#### Note
 > You may skip this section by using a prepared VM image
-  [crete-demo.img](http://svl13.cs.pdx.edu/crete-demo.img). This image has
+  [crete.img](http://svl13.cs.pdx.edu/crete.img). This image has
   Ubuntu-14.04.5-server-amd64 installed as the Guest OS along with all CRETE
   guest utilities.
 >
@@ -265,7 +265,7 @@ it may cause image corruption.
 
 ## 4. Generating Test Cases for Linux Binaries
 This section will show how to use CRETE to generate test cases for unmodified Linux
-binaries. In this section, I will use "crete-demo.img" as the VM image
+binaries. In this section, I will use "crete.img" as the VM image
 prepared for CRETE. Also, I will use __echo__ from _GNU CoreUtils_ as the target
 binary under test.
 
@@ -273,7 +273,7 @@ binary under test.
 #### Provide a configuration file for the target binary
 Boot the VM image using qemu without kvm-enabled first:
 ```bash
-$ qemu-system-x86_64 -hda crete-demo.img -m 256 -k en-us
+$ qemu-system-x86_64 -hda crete.img -m 256 -k en-us
 ```
 A sample configuration file, _crete.demo.echo.xml_, for _echo_ is given as follows :
 ```xml
@@ -297,17 +297,6 @@ In this way, we will test the binary with one concolic argument
 with size of 8 bytes and its initial value is "abc".
 
 #### Start CRETE guest utility on the given setup
-Currently, CRETE can be run in two modes:
-- Developer
-- Distributed
-
-Developer mode allows us to run CRETE on __one__ specific program
-
-Distributed mode allows us run CRETE on __multiple__ programs
-
-*note* While running CRETE in distributed mode, the image will be booted up by vm-node so, when you run "crete-vm-node -c crete.vm-node.xml", vm-node will boot the image. **Also, while running CRETE in developer mode, QEMU will exit after running crete. On the other hand, distributed will restart qemu everytime it is finished running tests. 
-
-
 With the configuration file, we are ready to use _crete-qemu_ to start the test
 on the target binary.
 
@@ -322,9 +311,25 @@ $ q
 enter
 ```
 
-### 4.2 Running CRETE in distributed mode
+From the host OS, launch _crete-qemu_ by loading the snapshot we just saved:
+```bash
+$ crete-qemu-2.3-system-x86_64 -hda crete.img -m 256 -k en-us -loadvm test
+```
 
-If you want to run Developer mode, please skip section 4.2.
+
+Currently, CRETE can be run in two modes:
+- Developer
+- Distributed
+
+Developer mode allows us to run CRETE on __one__ specific program
+
+Distributed mode allows us run CRETE on __multiple__ programs
+
+*note* While running CRETE in distributed mode, the image will be booted up by vm-node so, when you run "crete-vm-node -c crete.vm-node.xml", vm-node will boot the image. **Also, while running CRETE in developer mode, QEMU will exit after running crete. On the other hand, distributed will restart qemu everytime it is finished running tests. 
+
+If you want to run __Developer__ mode, please skip section __4.3__. Else, proceed to run CRETE in distributed mode
+
+### 4.2 Running CRETE in distributed mode
 
 
 >#### General flow of setup for Distributed mode
@@ -337,21 +342,78 @@ If you want to run Developer mode, please skip section 4.2.
 >6. Save the snapshot fo the VM image as 'test'
 >7. Now you are ready to run crete-dispatch -c crete.dispatch.xml, crete-vm-node -c crete.vm-node.xml (Run this command within vm-node folder), and crete-svm-node -c crete.svm-node.xml (Make sure to run these commands in seperate windows).
 
+## 4.2.1 Image location
+Please make sure the image you created is under crete-dev/image_template/vm-node/vm/1/. So, the path should look like:
+```xml crete-dev/image_template/vm-node/vm/1/crete.img ```
 
-From the host OS, launch _crete-qemu_ by loading the snapshot we just saved:
+## 4.2.2 Running crete and saving snapshot
+On your guestOS, please run 'crete-run'without any arguments:
+
 ```bash
-$ crete-qemu-2.3-system-x86_64 -hda crete-demo.img -m 256 -k en-us -loadvm test
+$ crete-run
 ```
+Save the snapshot under 'test' again.
+
+ ctrl+alt+2
+$ savevm test
+enter
+$ q
+enter
+
+## 4.2.3 Running crete-dispatch
+1. On the hostOS, in a separate terminal window, locate crete.dispatch.xml, it should be found under:
+```xml crete-dev/image_template/crete.dispatch.xml```
+
+Please make sure the path node in crete.dispatch.xml:
+```xml<path>/home/crete-dev/image_template/vm_node/vm/1/crete.img</path>```
+matches the path to your crete.img
+
+2. run crete-dispatch -c crete.dispatch.xml 
+
+3. You should get:
+```xml [CRETE] Awaiting connection on 'symdrive-svl.cs.pdx.edu' on port '10012' ...```
+This indicates you ran successfully and now can run crete-vm-node
+
+## 4.2.4 Running crete-vm-node
+1. On the hostOS, in a separate terminal window, locate crete.vm-node.xml, it should be found under:
+```xml crete-dev/image_template/vm-node/crete.vm-node.xml```
+
+2. run crete-vm-node -c crete.vm-node.xml 
+
+3. You should get:
+```xml [CRETE] Connecting to master 'localhost' on port '10012' ...
+// some more information about vm-node test running
+```
+This indicates you ran successfully and now waiting for crete-svm-node
+
+## 4.2.5 Running crete-svm-node
+1. On the hostOS, in a separate terminal window, locate crete.vm-node.xml, it should be found under:
+```xml crete-dev/image_template/crete.svm-node.xml```
+ Please make sure the path node matches the path to your crete-klee-1.4.0
+```xml
+<path>
+		<symbolic>/home/crete-build/bin/crete-klee-1.4.0</symbolic>
+</path>
+```
+2. run crete-svm-node -c crete.svm-node.xml 
+
+3. You should get:
+```xml [CRETE] Connecting to master 'localhost' on port '10012' ...
+// some more information about vm-node tests running
+```
+
+Success! You've ran CRETE in distributed mode
+## 4.2.2 Running crete
+Now, the guest OS is all set and should be waiting for CRETE back-end on the
+host OS to start.
+
+### 4.3 Executing CRETE Back-end on the Host OS (Developer mode)
 
 On the guest OS, execute CRETE guest utility with the guest configuration file:
 ```bash
 $ crete-run -c crete.demo.echo.xml
 ```
 
-Now, the guest OS is all set and should be waiting for CRETE back-end on the
-host OS to start.
-
-### 4.3 Executing CRETE Back-end on the Host OS (Developer mode)
 CRETE back-end has three parts: _crete-vm-node_ for managing VM instances,
 _crete-svm-node_ for managing symbolic VM instances, and _crete-dispatch_ for
 coordinating the whole process.
@@ -746,7 +808,7 @@ time.
 A solution for this is forwarding the monitor to a local port through
 telnet while launching qemu on the host OS:
 ```bash
-$ crete-qemu-2.3-system-x86_64 -hda crete-demo.img -m 256 -k en-us -loadvm test -monitor telnet:127.0.0.1:1234,server,nowait
+$ crete-qemu-2.3-system-x86_64 -hda crete.img -m 256 -k en-us -loadvm test -monitor telnet:127.0.0.1:1234,server,nowait
 ```
 Use the following command to access QEMU's monitor on the host OS:
 ```bash

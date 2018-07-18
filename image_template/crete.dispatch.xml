@@ -2,7 +2,7 @@
     <mode>distributed</mode>
     <vm>
       <image>
-        <path>/home/nguyenhaison/Desktop/nhaison-creteimg/img_template/vm_node/vm/1/crete.img</path>
+        <path>/home/crete-dev/image_template/vm_node/vm/1/crete.img</path>
         <update>false</update>
       </image>
       <arch>x64</arch>
