@@ -347,11 +347,19 @@ Please make sure the image you created is under crete/image_template/vm-node/vm/
 ```xml crete/image_template/vm-node/vm/1/crete.img ```
 
 ## 4.2.2 Running crete and saving snapshot
-On your guestOS, please run 'crete-run'without any arguments:
+On your guestOS, please run 'crete-run' without any arguments:
 
 ```bash
 $ crete-run
 ```
+
+You should get...
+```xml 
+[CRETE] Waiting for port...
+```
+
+This indicates you have ran it successfully and proceed to the next step.
+
 Save the snapshot under 'test' again.
 
 ```bash
