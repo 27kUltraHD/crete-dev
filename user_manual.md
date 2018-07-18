@@ -344,7 +344,9 @@ If you want to run __Developer__ mode, please skip section __4.3__. Else, procee
 
 #### 4.2.1 Image location
 Please make sure the image you created is under crete/image_template/vm-node/vm/1/. So, the path should look like:
-```xml crete/image_template/vm-node/vm/1/crete.img ```
+```xml 
+crete/image_template/vm-node/vm/1/crete.img 
+```
 
 #### 4.2.2 Running crete and saving snapshot
 On your guestOS, please run 'crete-run' without any arguments:
@@ -391,7 +393,9 @@ This indicates you ran successfully and now can run crete-vm-node
 
 #### 4.2.4 Running crete-vm-node
 1. On the hostOS, in a separate terminal window, locate crete.vm-node.xml, it should be found under:
-```xml crete/image_template/vm-node/crete.vm-node.xml```
+```xml 
+crete/image_template/vm-node/crete.vm-node.xml 
+```
 
 2. run crete-vm-node -c crete.vm-node.xml 
 
