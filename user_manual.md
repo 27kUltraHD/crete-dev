@@ -94,7 +94,7 @@ You can also add the executables and libraries to your .bashrc file:
 echo '# Added by CRETE' >> ~/.bashrc
 echo export PATH='$PATH':`readlink -f ./bin` >> ~/.bashrc
 echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin` >> ~/.bashrc
-echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin/boost` >> ~/.bashrc
+echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./lib/boost` >> ~/.bashrc
 source ~/.bashrc
 
 ```
@@ -268,13 +268,6 @@ This section will show how to use CRETE to generate test cases for unmodified Li
 binaries. In this section, I will use "crete-demo.img" as the VM image
 prepared for CRETE. Also, I will use __echo__ from _GNU CoreUtils_ as the target
 binary under test.
-
->#### General flow of execution
->1. Boot the VM image using qemu with kvm-enabled and provide configuration files
->2. Save the snapshot of the VM image
->3. Using crete-qemu, boot the image with snapshot *** do not add option '-enable-kvm', this will disable crete functionality because crete does not support KVM ***
->4. Provide CRETE front-end configuration file
->5. Provide CRETE back-end configuration file(s)
 
 ### 4.1 Setting-up the Test on the Guest OS
 #### Provide a configuration file for the target binary
@@ -496,7 +489,7 @@ Developer mode allows us to run CRETE on one specific program
 
 Distributed mode allows us run CRETE on multiple programs
 
-*note* While running CRETE in developer mode, QEMU will exit after running crete. On the other hand, distributed will restart qemu everytime it is finished running tests.
+*note* While running CRETE in distributed mode, the qemu-image will be booted up by vm-node so, when you run "crete-vm-node -c crete.vm-node.xml", vm-node will boot the image. **Also, while running CRETE in developer mode, QEMU will exit after running crete. On the other hand, distributed will restart qemu everytime it is finished running tests. 
 
 ```xml
 <crete>
@@ -576,7 +569,7 @@ This section describes how many tests to run and how long to wait to terminate m
 </test>
 ```
 
-### Distributed Mode
+### Running Distributed Mode
 
 There will be some minor differences in the markup
 
@@ -585,7 +578,7 @@ There will be some minor differences in the markup
     <mode>distributed</mode>
     <vm>
       <image>
-        <path>crete_ubuntu_x86.img</path>
+        <path>nhaison-creteimg/img_template/vm-node/vm/1/crete.img</path>
         <update>false</update>
       </image>
       <arch>x64</arch>
@@ -611,7 +604,7 @@ There will be some minor differences in the markup
             <tc>10000</tc>
             <time>900</time>
             <items>
-              <item>/home/test/haison/crete.demo.echo.xml</item>
+              <item>/home/crete/crete.demo.echo.xml</item>
             </items>
         </interval>
     </test>
@@ -621,11 +614,15 @@ There will be some minor differences in the markup
 </crete>
 ```
 
-We need to specify the path to our image.
+We need to specify the path to our image. Our image will be specifically found in 
+```xml
+nhaison-creteimg/img_template/vm-node/vm/1/
+```
 
 ```xml
+
 <image>
-        <path>/path-to/crete_ubuntu_x86.img</path>
+        <path>nhaison-creteimg/img_template/vm-node/vm/1/crete.img</path>
         <update>false</update>
 </image>
 ```
@@ -643,16 +640,16 @@ We now include the programs (items) we want to run tests on
 
 ```xml
 <items>
-              <item>/home/test/haison/crete.demo.echo.xml</item>
+              <item>/home/crete/crete.demo.echo.xml</item>
 </items>
 ```
 
 If we were to run multiple tests then we would have multiple items under the items tag
 ```xml
 <items>
-	<item>/home/test/haison/crete.demo.echo.xml</item>
-	<item>/path-to-item2</item>
-	<item>/path-to-item3</item>
+	<item>/home/crete/crete.demo.echo.xml</item>
+	<item>/path-to-item2/</item>
+	<item>/path-to-item3/</item>
 </items>
 ```
 
@@ -704,6 +701,15 @@ If we were to run multiple tests then we would have multiple items under the ite
     </master>
 </crete>
 ```
+
+>#### General flow of setup for Distributed mode
+>1. Boot the VM image using qemu with kvm-enabled and sample configuration file to be tested. (crete.demo.echo.xml)
+>2. Save the snapshot of the VM image as 'test'
+>3. Using crete-qemu, boot the image with snapshot *** do not add option '-enable-kvm', this will disable crete functionality because crete does not support KVM ***
+>4. Run crete-run and take a snapshot as the image waits for a port 
+```xml [CRETE] Waiting for port... ```
+>5. Save the snapshot fo the VM image as 'test'
+>6. Now you are ready to run crete-dispatch -c crete.dispatch.xml, crete-vm-node -c crete.vm-node.xml (within vm-node folder), and crete-svm-node -c crete.svm-node.xml (Make sure to run these commands in seperate windows).
 
 ## 6. FAQ
 
