@@ -1,7 +1,7 @@
 <crete>
     <svm>
 	<path>
-		<symbolic>/home/crete-build/bin/crete-klee-1.4.0</symbolic>
+		<symbolic>/home/crete/crete-build/bin/crete-klee-1.4.0</symbolic>
 	</path>
         <count>1</count>
     </svm>

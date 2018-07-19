@@ -51,18 +51,6 @@ docker pull nhaison/crete
 
 __Note this process pulls images containing code compiled by a third-party service. We do not accept responsibility for the contents of the image.__
 
-#### Building a Docker image locally
-
-build a docker image called 'crete' in the working directory 
-
-```bash
-git clone https://github.com/27kUltraHD/crete-dev
-cd crete-dev
-docker build -t nhaison/crete .
-```
-
-This will use the contents of the __Dockerfile__ in the root of the repository to build the Docker image.
-
 #### Creating a CRETE Docker container
 
 Now that you have a CRETE Docker image you can try creating a container from the image.
@@ -400,8 +388,9 @@ Please make sure the image you created is under crete/image_template/vm-node/vm/
 ```xml 
 crete/image_template/vm-node/vm/1/crete.img 
 ```
+__SKIP TO SECTION 4.2.3 IF YOU PULLED THE CRETE DOCKER IMAGE__
 
-#### 4.2.2 Running crete and saving snapshot
+#### 4.2.2 Running crete and saving snapshot 
 On your guestOS, please run 'crete-run' without any arguments:
 
 ```bash
@@ -427,7 +416,7 @@ enter
 #### 4.2.3 Running crete-dispatch
 1. On the hostOS, in a separate terminal window, locate crete.dispatch.xml, it should be found under:
 ```xml 
-crete/image_template/crete.dispatch.xml
+/home/crete/image_template/crete.dispatch.xml
 ```
 
 Please make sure the path node in crete.dispatch.xml:
