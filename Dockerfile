@@ -20,12 +20,9 @@ RUN apt-get update && \
 	zlib1g-dev \
 	libglib2.0-dev \
 	wget \
-	ca-certificates \
-	libsdl1.2-dev
+	ca-certificates
 
-RUN echo "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.4 main" | sudo tee -a /etc/apt/sources.list
-RUN echo "deb-src http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.4 main" | sudo tee -a /etc/apt/sources.list
-RUN wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add -
+RUN echo "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.4 main" | sudo tee -a /etc/apt/sources.list && echo "deb-src http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.4 main" | sudo tee -a /etc/apt/sources.list && wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add -
 
 RUN apt-get update && \
     apt-get -y --no-install-recommends install \
@@ -38,31 +35,18 @@ WORKDIR /home
 RUN mkdir crete
 WORKDIR /home/crete
 
-RUN git clone --recursive https://github.com/justin-bao/crete-dev.git crete-dev
-
-RUN mkdir crete-build
+RUN git clone --recursive https://github.com/justin-bao/crete-dev.git crete-dev && mkdir crete-build
 WORKDIR ${CRETE_BUILD_PATH}
-RUN CXX=clang++-${LLVM_VERSION} cmake ../crete-dev
-RUN make -j
-
-WORKDIR ${CRETE_BUILD_PATH}
-RUN echo '# Added by CRETE' >> ~/.bashrc
-RUN echo export PATH='$PATH':`readlink -f ./bin` >> ~/.bashrc
-RUN echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin` >> ~/.bashrc
-RUN echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./lib/boost/boost-prefix/src/boost_1_59_0/stage/lib` >> ~/.bashrc
-RUN . ~/.bashrc
+RUN CXX=clang++-${LLVM_VERSION} cmake ../crete-dev && make
 
 WORKDIR /home/crete
 RUN git clone --recursive https://github.com/justin-bao/test-crete.git test-crete
 
-WORKDIR /home
-RUN wget https://download.qemu.org/qemu-2.3.0.tar.xz
-RUN tar xvJf qemu-2.3.0.tar.xz
-WORKDIR /home/qemu-2.3.0
-RUN ./configure
-RUN make
+RUN echo '# Added by CRETE' >> ~/.bashrc && echo export PATH='$PATH':`readlink -f ./bin` >> ~/.bashrc && echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin` >> ~/.bashrc && echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin/boost` >> ~/.bashrc && . ~/.bashrc
 
-RUN echo "alias qemu-system-x86_64='/home/qemu-2.3.0/x86_64-softmmu/qemu-system-x86_64'" >> ~/.bashrc
-RUN echo "alias qemu-img='/home/qemu-2.3.0/qemu-img'" >> ~/.bashrc
 WORKDIR /home
-RUN git clone https://projects.cecs.pdx.edu/git/nhaison-creteimg
+RUN git clone https://projects.cecs.pdx.edu/git/nhaison-creteimg && mv nhaison-creteimg/image_template crete && rm -rf nhaison-creteimg && wget https://download.qemu.org/qemu-2.3.0.tar.xz && tar xvJf qemu-2.3.0.tar.xz && rm qemu-2.3.0.tar.xz
+WORKDIR /home/qemu-2.3.0
+RUN ./configure && make
+
+
