@@ -37,12 +37,7 @@ WORKDIR /home/crete
 
 RUN git clone --recursive https://github.com/justin-bao/crete-dev.git crete-dev && mkdir crete-build
 WORKDIR ${CRETE_BUILD_PATH}
-RUN CXX=clang++-${LLVM_VERSION} cmake ../crete-dev && make
-
-WORKDIR /home/crete
-RUN git clone --recursive https://github.com/justin-bao/test-crete.git test-crete
-
-RUN echo '# Added by CRETE' >> ~/.bashrc && echo export PATH='$PATH':`readlink -f ./bin` >> ~/.bashrc && echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin` >> ~/.bashrc && echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin/boost` >> ~/.bashrc && . ~/.bashrc
+RUN CXX=clang++-${LLVM_VERSION} cmake .. && make && echo '# Added by CRETE' >> ~/.bashrc && echo export PATH='$PATH':`readlink -f ./bin` >> ~/.bashrc && echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin` >> ~/.bashrc && echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin/boost` >> ~/.bashrc && source ~/.bashrc
 
 WORKDIR /home
 RUN git clone https://projects.cecs.pdx.edu/git/nhaison-creteimg && mv nhaison-creteimg/image_template crete && rm -rf nhaison-creteimg && wget https://download.qemu.org/qemu-2.3.0.tar.xz && tar xvJf qemu-2.3.0.tar.xz && rm qemu-2.3.0.tar.xz
