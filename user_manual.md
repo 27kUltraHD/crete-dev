@@ -425,7 +425,10 @@ Please make sure the path node in crete.dispatch.xml:
 ```
 matches the path to your crete.img
 
-2. run crete-dispatch -c crete.dispatch.xml 
+2. Run 
+```bash
+crete-dispatch -c crete.dispatch.xml 
+```
 
 3. You should get:
 ```xml 
@@ -436,11 +439,13 @@ This indicates you ran successfully and now can run crete-vm-node
 #### 4.2.4 Running crete-vm-node
 1. On the hostOS, in a separate terminal window, locate crete.vm-node.xml, it should be found under:
 ```xml 
-crete/image_template/vm-node/crete.vm-node.xml 
+/home/crete/image_template/vm-node/crete.vm-node.xml 
 ```
 
-2. run crete-vm-node -c crete.vm-node.xml 
-
+2. Run 
+```bash
+crete-vm-node -c crete.vm-node.xml 
+```
 3. You should get:
 ```xml 
 [CRETE] Connecting to master 'localhost' on port '10012' ...
@@ -451,7 +456,7 @@ This indicates you ran successfully and now waiting for crete-svm-node
 #### 4.2.5 Running crete-svm-node
 1. On the hostOS, in a separate terminal window, locate crete.vm-node.xml, it should be found under:
 ```xml
-crete/image_template/crete.svm-node.xml
+/home/crete/image_template/crete.svm-node.xml
 ```
  Please make sure the path node matches the path to your crete-klee-1.4.0
 ```xml
@@ -459,15 +464,17 @@ crete/image_template/crete.svm-node.xml
 		<symbolic>/home/crete-build/bin/crete-klee-1.4.0</symbolic>
 </path>
 ```
-2. run crete-svm-node -c crete.svm-node.xml 
-
+2. Run
+```bash
+crete-svm-node -c crete.svm-node.xml 
+```bash
 3. You should get:
 ```xml 
 [CRETE] Connecting to master 'localhost' on port '10012' ...
 // some more information about vm-node tests running
 ```
 
-Success! You've ran CRETE in distributed mode
+__Success! You've ran CRETE in distributed mode__
 
 
 ### 4.3 Executing CRETE Front-end on Guest OS and Back-end on the Host OS (Developer mode)
@@ -636,15 +643,11 @@ concolic:
 
 ### crete-dispatch configuration
 
-Currently, CRETE can be run in two modes:
+As mentioned earlier, CRETE can be ran in two modes:
 - Developer
 - Distributed
 
-Developer mode allows us to run CRETE on one specific program
-
-Distributed mode allows us run CRETE on multiple programs
-
-*note* While running CRETE in distributed mode, the qemu-image will be booted up by vm-node so, when you run "crete-vm-node -c crete.vm-node.xml", vm-node will boot the image. **Also, while running CRETE in developer mode, QEMU will exit after running crete. On the other hand, distributed will restart qemu everytime it is finished running tests. 
+Below is a listing of the .xml files for both, respectively.
 
 ```xml
 <crete>
@@ -733,7 +736,7 @@ There will be some minor differences in the markup
     <mode>distributed</mode>
     <vm>
       <image>
-        <path>nhaison-creteimg/img_template/vm-node/vm/1/crete.img</path>
+        <path>/home/crete/image_template/vm-node/vm/1/crete.img</path>
         <update>false</update>
       </image>
       <arch>x64</arch>
@@ -771,7 +774,7 @@ There will be some minor differences in the markup
 
 We need to specify the path to our image. Our image will be specifically found in 
 ```xml
-nhaison-creteimg/img_template/vm-node/vm/1/
+/home/crete/image_template/vm-node/vm/1/crete.img
 ```
 
 ```xml
