@@ -35,7 +35,7 @@ WORKDIR /home
 RUN mkdir crete
 WORKDIR /home/crete
 
-RUN git clone --recursive https://github.com/justin-bao/crete-dev.git crete-dev && mkdir crete-build
+RUN git clone --recursive https://github.com/SVL-PSU/crete-dev.git crete && mkdir crete-build
 WORKDIR ${CRETE_BUILD_PATH}
 RUN CXX=clang++-${LLVM_VERSION} cmake .. && make && echo '# Added by CRETE' >> ~/.bashrc && echo export PATH='$PATH':`readlink -f ./bin` >> ~/.bashrc && echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin` >> ~/.bashrc && echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin/boost` >> ~/.bashrc && source ~/.bashrc
 
