@@ -20,7 +20,8 @@ RUN apt-get update && \
 	zlib1g-dev \
 	libglib2.0-dev \
 	wget \
-	ca-certificates
+	ca-certificates \
+	telnet
 
 RUN echo "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.4 main" | sudo tee -a /etc/apt/sources.list && echo "deb-src http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.4 main" | sudo tee -a /etc/apt/sources.list && wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add -
 
@@ -45,9 +46,12 @@ RUN echo export PATH='$PATH':`readlink -f ./bin` >> ~/.bashrc
 RUN echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin` >> ~/.bashrc 
 RUN echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin/boost` >> ~/.bashrc 
 
-WORKDIR /home
+WORKDIR ${CRETE_DEV_PATH}
 
-RUN wget http://svl15.cs.pdx.edu/image_template.tar.gz && tar xvf image_template.tar.gz && rm image_template.tar.gz && wget https://download.qemu.org/qemu-2.3.0.tar.xz && tar xvJf qemu-2.3.0.tar.xz && rm qemu-2.3.0.tar.xz
+RUN wget http://svl15.cs.pdx.edu/image_template.tar.gz && tar xvf image_template.tar.gz && rm image_template.tar.gz
+
+WORKDIR /home
+RUN wget https://download.qemu.org/qemu-2.3.0.tar.xz && tar xvJf qemu-2.3.0.tar.xz && rm qemu-2.3.0.tar.xz
 
 WORKDIR /home/qemu-2.3.0
 RUN ./configure && make && make install

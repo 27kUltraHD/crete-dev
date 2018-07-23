@@ -39,8 +39,6 @@ You can build CRETE distributed using docker or manually from source code. For m
 
 The version of docker used to test CRETE compatibility is Docker version 18.03.1-ce
 
-There are two ways to obtain a CRETE image.
-
 #### Pulling from Docker hub
 
 To pull down the latest build of a particular Docker image run:
@@ -56,8 +54,9 @@ __Note this process pulls images containing code compiled by a third-party servi
 Now that you have a CRETE Docker image you can try creating a container from the image.
 
 ```bash
-docker run --rm -ti --ulimit='stack=-1:-1' nhaison/crete
+docker run --name crete -ti --ulimit='stack=-1:-1' nhaison/crete
 ```
+
 __Note the --ulimit option sets an unlimited stack size inside the container. This is to avoid stack overflow issues when running KLEE.__
 
 If this worked correctly, your shell prompt will have changed and you will be the __root__ user.
@@ -70,6 +69,20 @@ root@d62a2428405d:/home#
 Now exit the container
 ```bash
 root@d62a2428405d:/home# exit
+```
+
+Now enter the existing container
+```bash
+docker start -ai crete
+```
+
+To have multiple connections to one container:
+1. Make sure the container is running (docker ps -a)
+2. Open a new terminal
+
+For each terminal, enter
+```bash
+docker exec -it	crete bash
 ```
 
 __Continue to section 4.2.3 for further instructions in running CRETE in distributed mode.__
