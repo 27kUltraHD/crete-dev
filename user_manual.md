@@ -76,6 +76,7 @@ Now enter the existing container
 docker start -ai crete
 ```
 
+#### Entering the container from a new terminal window
 To have multiple connections to one container:
 1. Make sure the container is running (docker ps -a)
 2. Open a new terminal
@@ -85,7 +86,70 @@ For each terminal, enter
 docker exec -it	crete bash
 ```
 
-__Continue to section 4.2.3 for further instructions in running CRETE in distributed mode.__
+####  Running crete-dispatch
+1. Locate crete.dispatch.xml, it should be found under:
+
+```xml 
+/home/crete/image_template/crete.dispatch.xml
+```
+
+Please make sure the path node in crete.dispatch.xml:
+```xml 
+<path>/home/crete/image_template/vm_node/vm/1/crete.img</path>
+```
+matches the path to your crete.img
+
+2. Run 
+```bash
+crete-dispatch -c crete.dispatch.xml 
+```
+
+3. You should get:
+```xml 
+[CRETE] Awaiting connection on 'symdrive-svl.cs.pdx.edu' on port '10012' ...
+This indicates you ran successfully and now can run crete-vm-node
+```
+
+#### Running crete-vm-node
+1. In a separate terminal window (make sure you enter the container), locate crete.vm-node.xml, it should be found under:
+```xml 
+/home/crete/image_template/vm-node/crete.vm-node.xml 
+```
+
+2. Run 
+```bash
+crete-vm-node -c crete.vm-node.xml 
+```
+3. You should get:
+```xml 
+[CRETE] Connecting to master 'localhost' on port '10012' ...
+// some more information about vm-node test running
+```
+This indicates you ran successfully and now waiting for crete-svm-node
+
+#### 4.2.5 Running crete-svm-node
+1. In a separate terminal window (make sure you enter the container), locate crete.svm-node.xml, it should be found under:
+```xml
+/home/crete/image_template/crete.svm-node.xml
+```
+ Please make sure the path node matches the path to your crete-klee-1.4.0
+```xml
+<path>
+		<symbolic>/home/crete-build/bin/crete-klee-1.4.0</symbolic>
+</path>
+```
+2. Run
+```bash
+crete-svm-node -c crete.svm-node.xml 
+```bash
+3. You should get:
+```xml 
+[CRETE] Connecting to master 'localhost' on port '10012' ...
+// some more information about vm-node tests running
+```
+
+__Success! You've ran CRETE in distributed mode__
+
 
 ### 2.1 Dependencies
 The following apt-get packages are required:
