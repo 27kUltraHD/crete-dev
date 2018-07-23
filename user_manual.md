@@ -33,11 +33,11 @@ have been tested.
 
 ## 2. Building CRETE
 
-You can build CRETE distributed using docker or manually from source code. For manual installation, please skip this section.
+__You can build CRETE distributed using docker or manually from source code. For manual installation, please skip this section.__
 
 ### Building CRETE with docker
 
-The version of docker used to test CRETE compatibility is Docker version 18.03.1-ce
+The version of docker used to test CRETE compatibility is Docker __version 18.03.1-ce__
 
 #### Pulling from Docker hub
 
@@ -78,7 +78,7 @@ docker start -ai crete
 
 #### Entering the container from a new terminal window
 To have multiple connections to one container:
-1. Make sure the container is running (docker ps -a)
+1. Make sure the container is running (__docker ps -a__)
 2. Open a new terminal
 
 For each terminal, enter
@@ -127,7 +127,7 @@ crete-vm-node -c crete.vm-node.xml
 ```
 This indicates you ran successfully and now waiting for crete-svm-node
 
-#### 4.2.5 Running crete-svm-node
+#### Running crete-svm-node
 1. In a separate terminal window (make sure you enter the container), locate crete.svm-node.xml, it should be found under:
 ```xml
 /home/crete/image_template/crete.svm-node.xml
@@ -141,8 +141,10 @@ This indicates you ran successfully and now waiting for crete-svm-node
 2. Run
 ```bash
 crete-svm-node -c crete.svm-node.xml 
-```bash
+```
+
 3. You should get:
+
 ```xml 
 [CRETE] Connecting to master 'localhost' on port '10012' ...
 // some more information about vm-node tests running
