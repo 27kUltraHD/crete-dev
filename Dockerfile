@@ -46,7 +46,8 @@ RUN echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin` >> ~/.bas
 RUN echo export LD_LIBRARY_PATH='$LD_LIBRARY_PATH':`readlink -f ./bin/boost` >> ~/.bashrc 
 
 WORKDIR /home
-RUN git clone https://projects.cecs.pdx.edu/git/nhaison-creteimg && mv nhaison-creteimg/image_template crete && rm -rf nhaison-creteimg && wget https://download.qemu.org/qemu-2.3.0.tar.xz && tar xvJf qemu-2.3.0.tar.xz && rm qemu-2.3.0.tar.xz
+
+RUN wget http://svl15.cs.pdx.edu/image_template.tar.gz && tar xvf image_template.tar.gz && rm image_template.tar.gz && wget https://download.qemu.org/qemu-2.3.0.tar.xz && tar xvJf qemu-2.3.0.tar.xz && rm qemu-2.3.0.tar.xz
 
 WORKDIR /home/qemu-2.3.0
 RUN ./configure && make && make install

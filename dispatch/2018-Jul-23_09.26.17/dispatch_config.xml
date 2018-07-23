@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<crete>
+	<mode>distributed</mode>
+	<vm>
+		<image>
+			<path>/home/nguyenhaison/Desktop/nguyenhaison-creteimg/image_template/vm_node/vm/1/crete.img</path>
+			<update>false</update>
+		</image>
+		<arch>x64</arch>
+		<snapshot>test</snapshot>
+		<args>-m 256 -monitor telnet:localhost:1234,server,nowait -nographic</args>
+	</vm>
+	<svm>
+		<args>
+			<symbolic>--max-memory=1000 --disable-inlining --use-forked-solver --max-sym-array-size=4096 --max-instruction-time=5 --max-time=150 --search=dfs</symbolic>
+		</args>
+	</svm>
+	<test>
+		<interval>
+			<trace>10000</trace>
+			<tc>10000</tc>
+			<time>900</time>
+		</interval>
+		<items>
+			<item>/home/crete/crete.demo.echo.xml</item>
+		</items>
+	</test>
+	<profile>
+		<interval>10</interval>
+	</profile>
+</crete>
