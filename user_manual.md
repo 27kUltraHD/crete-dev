@@ -5,18 +5,21 @@
 # Table of Contents
 
 * [Prerequisites](#prerequisites)
-* [Building CRETE](#2. Building CRETE)
-	* [Building CRETE with Docker](#Building CRETE with Docker)
-	* [Creating a CRETE Docker container](#Creating a CRETE Docker container)
-	* [Entering the container from a new terminal window](#Entering the container from a new terminal window)
-	* [Running CRETE in distributed mode in Docker](#Running CRETE)
-		* [Running crete-dispatch](#Running crete-dispatch)
-		* [Running crete-vm-node](#Running crete-vm-node)
-		* [Running crete-svm-node](#Running crete-svm-node)
+	* [Terminology](#terminology)
+	* [Unix/Linux Knowledge](#unix/linux-knowledge)
+	* [Operating System](#operating-system)
+* [Building CRETE](#building-crete)
+	* [Building CRETE with Docker](#building-crete-with-docker)
+	* [Creating a CRETE Docker container](#creating-a-crete-docker-container)
+	* [Entering the container from a new terminal window](#entering-the-container-from-a-new-terminal-window)
+	* [Running CRETE in distributed mode in Docker](#running-crete)
+		* [Running crete-dispatch](#running-crete-dispatch)
+		* [Running crete-vm-node](#running-crete-vm-node)
+		* [Running crete-svm-node](#running-crete-svm-node)
 
 ## Prerequisites
 
-### 1.1. Terminology
+### Terminology
 Virtual Machine (VM)
 >The VM is what runs the guest OS. Its purpose is to emulate a physical
 machine.
@@ -27,12 +30,12 @@ Host Operating System (host OS)
 Guest Operating System (guest OS)
 > The _guest OS_ is the OS that runs on the virtual machine.
 
-### 1.2. Unix/Linux Knowledge
+### Unix/Linux Knowledge
 A modest familiarity with Unix-style systems is required. You must be able to
 navigate your way around the system in a terminal and interact with files from
 command line.
 
-### 1.3. Operating System
+### Operating System
 CRETE requires the use of [Ubuntu
 12.04-amd64](http://releases.ubuntu.com/12.04/ubuntu-12.04.5-desktop-amd64.iso)
 or [Ubuntu
@@ -44,7 +47,7 @@ for the host OS. While various guest OS should work, only
 and [Debian-7.11.0-i386](http://cdimage.debian.org/cdimage/archive/7.11.0/i386/iso-cd/debian-7.11.0-i386-netinst.iso)
 have been tested.
 
-## 2. Building CRETE
+## Building CRETE
 
 __You can build CRETE distributed using Docker or manually from source code. For manual installation, please skip this section.__
 
