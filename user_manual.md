@@ -10,12 +10,39 @@
 	* [Operating System](#operating-system)
 * [Building CRETE](#building-crete)
 	* [Building CRETE with Docker](#building-crete-with-docker)
+	* [Pulling from Docker hub](#pulling-from-docker-hub)
 	* [Creating a CRETE Docker container](#creating-a-crete-docker-container)
 	* [Entering the container from a new terminal window](#entering-the-container-from-a-new-terminal-window)
 	* [Running CRETE in distributed mode in Docker](#running-crete)
 		* [Running crete-dispatch](#running-crete-dispatch)
 		* [Running crete-vm-node](#running-crete-vm-node)
 		* [Running crete-svm-node](#running-crete-svm-node)
+* [Dependencies](#dependencies)
+	* [Building](#building)
+	* [Misc Setup](#misc-setup)
+* [Preparing the Guest Operating System](#preparing-the-guest-operating-system)
+	* [Building QEMU from Source code](#building-qemu-from-source-code)
+	* [Create a QEMU Image](#create-a-qemu-image)
+	* [Install the Guest OS](#install-the-guest-os)
+	* [Build CRETE Guest Utilities](#build-crete-guest-utilities)
+	* [Other Guest OS Configurations](#other-guest-os-configurations)
+	* [Tips for Using QEMU](#tips-for-using-qemu)
+* [Generating Test Cases for Linux Binaries](#generating-test-cases-for-linux-binaries)
+	* [Setting-up the Test on the Guest OS](#setting-up-the-test-on-the-guest-os)
+	* [Start CRETE guest utility on the given setup](#start-crete-guest-utility-on-the-given-setup)
+		* [Provide a configuration file for the target binary](#provide-a-configuration-file-for-the-target-binary)
+	* [Running CRETE in distributed mode](#running-crete-in-distributed-mode)
+		* [Image location](#image-location)
+		* [Running crete and saving snapshot](#running-crete-and-saving-snapshot)
+		* [Running crete-dispatch](#running-crete-dispatch)
+		* [Running crete-vm-node](#running-crete-vm-node)
+		* [Running crete-svm-node](#running-crete-svm-node)
+	* [Executing CRETE Front-end on Guest OS and Back-end on the Host OS (Developer mode)](#executing-crete-front-end-on-guest-os-and-back-end-on-the-host-os-(developer-mode)]
+		* [Start crete-dispatch on the Host OS:](#start-crete-dispatch-on-the-host-os:)
+		* [Start crete-vm-node on the Host OS:](#start-crete-vm-node-on-the-host-os:)
+		* [Start crete-svm-node on the Host OS:](#start-crete-svm-node-on-the-host-os:)
+	*[Collecting Result on the Host OS](#collecting-result-on-the-host-os)
+*[Configuration Options](#configuration-options)
 
 ## Prerequisites
 
@@ -176,7 +203,7 @@ crete-svm-node -c crete.svm-node.xml
 __Success! You've ran CRETE in distributed mode__
 
 
-### 2.1 Dependencies
+### Dependencies
 The following apt-get packages are required:
 ```bash
 sudo apt-get update
@@ -197,7 +224,7 @@ sudo apt-get update
 sudo apt-get install clang-3.4 llvm-3.4 llvm-3.4-dev llvm-3.4-tools
 ```
 
-### 2.2 Building
+### Building
 >#### Warning
 
 > CRETE uses Boost 1.59.0. If any other version of Boost is installed on the system, there may be conflicts. It is recommended that you remove any conflicting Boost versions.
@@ -219,7 +246,7 @@ CXX=clang++-3.4 cmake ../crete
 make # use -j to speedup
 ```
 
-### 2.3 Misc Setup
+### Misc Setup
 
 As documented on the STP and KLEE website, it is essential to set up the limit
 on open files and stack size. In most cases, the hard limit will have to be
@@ -243,7 +270,7 @@ source ~/.bashrc
 ```
 At this point, you're all set with building CRETE!
 
-## 3. Preparing the Guest Operating System
+## Preparing the Guest Operating System
 >#### Note
 > You may skip this section by using a prepared VM image
   [crete.img](http://svl13.cs.pdx.edu/crete.img). This image has
