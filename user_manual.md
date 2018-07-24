@@ -92,8 +92,10 @@ Note that this process pulls images containing code compiled by a third-party se
 Now that you have a CRETE Docker image you can try creating a container from the image.
 
 ```bash
-docker run --rm -ti --ulimit='stack=-1:-1' nhaison/crete
+docker run --name crete -ti --ulimit='stack=-1:-1' nhaison/crete
 ```
+
+You now have created a container named __crete__
 
 Note that the ```--ulimit``` option sets an unlimited stack size inside the container. This is to avoid stack overflow issues when running CRETE.
 
@@ -465,7 +467,7 @@ enter
 #### 4.2.3 Running crete-dispatch
 In a separate terminal window in the container, locate crete.dispatch.xml. It should be found under:
 ```xml 
-/home/crete/image_template/crete.dispatch.xml
+/home/crete/crete-dev/image_template/crete.dispatch.xml
 ```
 
 Make sure the path node in crete.dispatch.xml:
@@ -528,6 +530,9 @@ entering: KleeFSM_
 entering: Start
 ...
 ```
+
+And then a bunch of tests will be ran, this process may take a couple of minutes to finish.
+
 
 __You've successfully run CRETE in Distributed Mode!__
 
