@@ -4,7 +4,7 @@
 
 # Table of Contents
 
-* [Prerequisites](#1. Prerequisites)
+* [Prerequisites](#prereqs)
 * [Building CRETE](#2. Building CRETE)
 	* [Building CRETE with Docker](#Building CRETE with Docker)
 	* [Creating a CRETE Docker container](#Creating a CRETE Docker container)
@@ -13,8 +13,10 @@
 		* [Running crete-dispatch](#Running crete-dispatch)
 		* [Running crete-vm-node](#Running crete-vm-node)
 		* [Running crete-svm-node](#Running crete-svm-node)
+<h4 id="prereqs">
+1. Prerequisites
+</h4>
 
-## 1. Prerequisites
 ### 1.1. Terminology
 Virtual Machine (VM)
 >The VM is what runs the guest OS. Its purpose is to emulate a physical
