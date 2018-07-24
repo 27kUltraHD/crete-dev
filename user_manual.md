@@ -4,7 +4,7 @@
 
 # Table of Contents
 
-* [Prerequisites](#1.-Prerequisites)
+* [Prerequisites](#prerequisites)
 * [Building CRETE](#2. Building CRETE)
 	* [Building CRETE with Docker](#Building CRETE with Docker)
 	* [Creating a CRETE Docker container](#Creating a CRETE Docker container)
@@ -14,7 +14,7 @@
 		* [Running crete-vm-node](#Running crete-vm-node)
 		* [Running crete-svm-node](#Running crete-svm-node)
 
-## 1. Prerequisites
+## Prerequisites
 
 ### 1.1. Terminology
 Virtual Machine (VM)
