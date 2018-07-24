@@ -4,7 +4,7 @@
 
 # Table of Contents
 
-* [Prerequisites](#1.-prerequisites)
+* [Prerequisites](#1.-Prerequisites)
 * [Building CRETE](#2. Building CRETE)
 	* [Building CRETE with Docker](#Building CRETE with Docker)
 	* [Creating a CRETE Docker container](#Creating a CRETE Docker container)
