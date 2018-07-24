@@ -6,13 +6,13 @@
 
 * [Prerequisites](#1. Prerequisites)
 * [Building CRETE](#2. Building CRETE)
-	*[Building CRETE with Docker](#Building CRETE with Docker)
-	*[Creating a CRETE Docker container](#Creating a CRETE Docker container)
-	*[Entering the container from a new terminal window](#Entering the container from a new terminal window)
-	*[Running CRETE in distributed mode in Docker](#Running CRETE)
-		*[Running crete-dispatch](#Running crete-dispatch)
-		*[Running crete-vm-node](#Running crete-vm-node)
-		*[Running crete-svm-node](#Running crete-svm-node)
+	* [Building CRETE with Docker](#Building CRETE with Docker)
+	* [Creating a CRETE Docker container](#Creating a CRETE Docker container)
+	* [Entering the container from a new terminal window](#Entering the container from a new terminal window)
+	* [Running CRETE in distributed mode in Docker](#Running CRETE)
+		* [Running crete-dispatch](#Running crete-dispatch)
+		* [Running crete-vm-node](#Running crete-vm-node)
+		* [Running crete-svm-node](#Running crete-svm-node)
 
 ## 1. Prerequisites
 ### 1.1. Terminology
