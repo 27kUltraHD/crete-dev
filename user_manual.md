@@ -465,7 +465,7 @@ enter
 ```
 
 #### 4.2.3 Running crete-dispatch
-In a separate terminal window in the container, locate crete.dispatch.xml. It should be found under:
+In a separate terminal window, locate crete.dispatch.xml. It should be found under:
 ```xml 
 /home/crete/crete-dev/image_template/crete.dispatch.xml
 ```
@@ -488,7 +488,7 @@ You should see:
 This indicates you ran _crete-dispatch_ successfully and can now run _crete-vm-node_.
 
 #### 4.2.4 Running crete-vm-node
-In a separate terminal window in the container, locate crete.vm-node.xml. It should be found under:
+In a separate terminal window, locate crete.vm-node.xml. It should be found under:
 ```xml 
 /home/crete/crete-dev/image_template/vm-node/crete.vm-node.xml 
 ```
@@ -508,7 +508,7 @@ entering: Start
 This indicates you ran _crete-vm-node_ successfully and can now run _crete-svm-node_.
 
 #### 4.2.5 Running crete-svm-node
-In a separate terminal window in the container, locate crete.svm-node.xml. It should be found under:
+In a separate terminal window, locate crete.svm-node.xml. It should be found under:
 ```xml
 /home/crete/crete-dev/image_template/crete.svm-node.xml
 ```
@@ -840,7 +840,7 @@ We need to specify the path to our image. Our image will be specifically found i
 ```xml
 
 <image>
-        <path>nhaison-creteimg/img_template/vm-node/vm/1/crete.img</path>
+        <path>/home/crete/crete-dev/image_template/vm-node/vm/1/crete.img</path>
         <update>false</update>
 </image>
 ```
