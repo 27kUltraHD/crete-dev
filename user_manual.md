@@ -2,6 +2,18 @@
 
 [![Build Status](https://travis-ci.org/SVL-PSU/crete-dev.svg?branch=master)](https://travis-ci.org/SVL-PSU/crete-dev)
 
+# Table of Contents
+
+* [Prerequisites](#1. Prerequisites)
+* [Building CRETE](#2. Building CRETE)
+	*[Building CRETE with Docker](#Building CRETE with Docker)
+	*[Creating a CRETE Docker container](#Creating a CRETE Docker container)
+	*[Entering the container from a new terminal window](#Entering the container from a new terminal window)
+	*[Running CRETE in distributed mode in Docker](#Running CRETE)
+		*[Running crete-dispatch](#Running crete-dispatch)
+		*[Running crete-vm-node](#Running crete-vm-node)
+		*[Running crete-svm-node](#Running crete-svm-node)
+
 ## 1. Prerequisites
 ### 1.1. Terminology
 Virtual Machine (VM)
@@ -33,11 +45,11 @@ have been tested.
 
 ## 2. Building CRETE
 
-__You can build CRETE distributed using docker or manually from source code. For manual installation, please skip this section.__
+__You can build CRETE distributed using Docker or manually from source code. For manual installation, please skip this section.__
 
-### Building CRETE with docker
+### Building CRETE with Docker
 
-The version of docker used to test CRETE compatibility is Docker __version 18.03.1-ce__
+The version of Docker used to test CRETE compatibility is Docker __version 18.03.1-ce__
 
 #### Pulling from Docker hub
 
@@ -86,7 +98,14 @@ For each terminal, enter
 docker exec -it	crete bash
 ```
 
-####  Running crete-dispatch
+### Running CRETE
+
+Running CRETE is a 3 step process.
+1. Running crete-dispatch
+2. Running crete-vm-node
+3. Running crete-svm-node
+
+#### Running crete-dispatch
 1. Locate crete.dispatch.xml, it should be found under:
 
 ```xml 
@@ -135,7 +154,7 @@ This indicates you ran successfully and now waiting for crete-svm-node
  Please make sure the path node matches the path to your crete-klee-1.4.0
 ```xml
 <path>
-		<symbolic>/home/crete-build/bin/crete-klee-1.4.0</symbolic>
+	<symbolic>/home/crete-build/bin/crete-klee-1.4.0</symbolic>
 </path>
 ```
 2. Run
