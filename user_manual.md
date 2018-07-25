@@ -1,4 +1,4 @@
-# CRETE User Guide
+# New Document# CRETE User Guide
 
 
 [![Build Status](https://travis-ci.org/SVL-PSU/crete-dev.svg?branch=master)](https://travis-ci.org/SVL-PSU/crete-dev)
@@ -12,7 +12,7 @@
 * [2. Building CRETE](#2-building-crete)
 	* [Building CRETE with Docker](#21-building-crete-with-docker)
 		* [Install Docker](#install-docker)
-		* [Creating a CRETE Docker container](#creating-a-crete-docker-container)
+		* [Creating a CRETE Docker container and running CRETE](#creating-a-crete-docker-container)
 	* [Building CRETE locally](#22-building-crete-locally)
 		* [Dependencies](#dependencies)
 		* [Building](#building)
@@ -25,8 +25,8 @@
 	* [Other Guest OS Configurations](#35-other-guest-os-configurations)
 * [4. Generating Test Cases for Linux Binaries](#4-generating-test-cases-for-linux-binaries)
 	* [Setting Up the Test on the Guest OS](#41-setting-up-the-test-on-the-guest-os)
-	* [Running CRETE in Distributed Mode](#42-running-crete-in-distributed-mode)
 	* [Running CRETE in Developer Mode](#43-executing-crete-front-end-on-guest-os-and-back-end-on-the-host-os-developer-mode)
+	* [Running CRETE in Distributed Mode](#42-running-crete-in-distributed-mode)
 	* [Collecting Results on the Host OS](#44-collecting-results-on-the-host-os)
 * [5. Configuration Options](#5-configuration-options)
 	* [Running Distributed Mode](#running-distributed-mode)
@@ -64,38 +64,38 @@ have been tested.
 
 ## 2. Building CRETE
 
-You can build CRETE Distributed using Docker or manually from source code. For manual installation, please skip this section.
+You can build CRETE using Docker or manually from source code. For manual installation, please skip this section and proceed to Building CRETE locally
 
 ### 2.1 Building CRETE with Docker
 
 The version of Docker used to test CRETE compatibility is Docker version 18.03.1-ce
 
-#### What is Docker?
+#### 2.1.1 What is Docker?
 Docker provides tools for deploying applications within containers separate from the host OS and other containers. As a result, the setup is quick and streamlined, and the container (along with any changes made within it) is discarded after use. Docker containers are built from a Docker image file.
 
-#### Install Docker
+#### 2.1.2 Install Docker
 
 To utilize the CRETE Docker image, Docker must be installed on your machine. For Ubuntu installation, follow the instructions on the [Docker website](https://docs.docker.com/install/linux/docker-ee/ubuntu/)
 
-#### Pulling from Docker Hub
+#### 2.1.3 Pulling from Docker Hub
 
-To pull down the latest build of a particular Docker image, run:
+To pull latest build of a particular CRETE Docker image, run:
 
 ```bash
-docker pull nhaison/crete
+$ docker pull nhaison/crete
 ```
 
 Note that this process pulls images containing code compiled by a third-party service. We do not accept responsibility for the contents of the image.
 
-#### Creating a CRETE Docker container
+#### 2.1.4 Creating a CRETE Docker container
 
 Now that you have a CRETE Docker image you can try creating a container from the image.
 
 ```bash
-docker run --name crete -ti --ulimit='stack=-1:-1' nhaison/crete
+$ docker run --name crete -ti --ulimit='stack=-1:-1' nhaison/crete
 ```
 
-You now have created a container named __crete__
+You now have created a container named __crete__.
 
 Note that the ```--ulimit``` option sets an unlimited stack size inside the container. This is to avoid stack overflow issues when running CRETE.
 
@@ -113,17 +113,70 @@ Now exit the container
 root@d62a2428405d:/home# exit
 ```
 
+#### 2.1.5 Starting the Docker container and running CRETE
+
 Now enter the existing container
 ```bash
-docker start -ai crete
+$ docker start -ai crete
 ```
 
-The container can be accessed through any terminal window:
+The container can be accessed from multiple terminal windows with the following:
 ```bash
-docker exec -it crete bash
+$ docker exec -it crete bash
 ```
 
-__Skip to section 4.2.3 for further instructions in running CRETE in Distributed mode. The rest of the manual until then details how to build CRETE on the host OS.__
+
+#### 2.1.6 Running crete-dispatch
+Within the container, run 
+```bash
+$ cd /home/crete/crete-dev/image_template/
+$ crete-dispatch -c crete.dispatch.xml 
+```
+
+You should see:
+```xml 
+[CRETE] Awaiting connection on 'symdrive-svl.cs.pdx.edu' on port '10012' ...
+```
+This indicates you ran _crete-dispatch_ successfully and can now run _crete-vm-node_.
+
+#### 2.1.7 Running crete-vm-node
+Obtain access to the container using a separate terminal window and then run
+```bash
+$ cd /home/crete/crete-dev/image_template/vm-node/
+$ crete-vm-node -c crete.vm-node.xml 
+```
+You should see:
+```xml 
+[CRETE] Connecting to master 'localhost' on port '10012' ...
+reset()
+entering: QemuFSM_
+entering: Start
+...
+```
+This indicates you ran _crete-vm-node_ successfully and can now run _crete-svm-node_.
+
+#### 2.1.8 Running crete-svm-node
+Obtain access to the container using a separate terminal window and then run
+
+```bash
+$ cd /home/crete/crete-dev/image_template/
+$ crete-svm-node -c crete.svm-node.xml 
+```
+
+You should see:
+```xml 
+[CRETE] Connecting to master 'localhost' on port '10012' ...
+entering: KleeFSM_
+entering: Start
+...
+```
+
+And then a bunch of tests will be ran, this process may take a couple of minutes to finish.
+
+
+__You've successfully run CRETE in Distributed Mode!__
+
+__Skip to section 5 for further explanation of the configuration files. The rest of the manual until then details how to build and run CRETE on the host OS.__
 
 
 ### 2.2 Building CRETE locally
@@ -413,11 +466,12 @@ Developer mode allows us to run CRETE on __one__ specific program.
 
 Distributed mode allows us run CRETE on __multiple__ programs. 
 
-While running CRETE in distributed mode, the image will be booted up by the _vm-node_. When you run ```crete-vm-node -c crete.vm-node.xml```, the _vm-node_ will boot the image. 
+While running CRETE in distributed mode, the QEMU image will be booted up by the _vm-node_. To elaborate, when you run ```crete-vm-node -c crete.vm-node.xml```, the _vm-node_ will boot the QEMU image. 
 
 While running CRETE in Developer mode, QEMU will exit after running CRETE. On the other hand, Distributed mode will restart QEMU every time it is finished running tests. 
 
 To run CRETE in __Distributed__ mode, follow the steps in section __4.2__ below. If you want to run __Developer__ mode, skip to section __4.3__.
+
 
 ### 4.2 Running CRETE in Distributed Mode
 
@@ -435,11 +489,92 @@ To run CRETE in __Distributed__ mode, follow the steps in section __4.2__ below.
 #### 4.2.1 Image location
 Make sure the image you created is under the correct directory. The path should look like this:
 ```xml 
-crete/crete-dev/image_template/vm-node/vm/1/crete.img 
+/home/crete/crete-dev/image_template/vm-node/vm/1/crete.img 
 ```
 
-#### 4.2.2 Initiating CRETE and saving snapshot 
-__SKIP THIS SECTION IF YOU ARE INSTEAD USING THE CRETE DOCKER IMAGE__
+
+
+#### 4.2.2 Running crete-dispatch
+In a separate terminal window, locate crete.dispatch.xml. It should be found under:
+```xml 
+/home/crete/crete-dev/image_template/crete.dispatch.xml
+```
+
+Make sure the path node in crete.dispatch.xml:
+```xml 
+<path>/home/crete/crete-dev/image_template/vm_node/vm/1/crete.img</path>
+```
+matches the path to your crete.img
+
+Run 
+```bash
+$ cd /home/crete/crete-dev/image_template
+$ crete-dispatch -c crete.dispatch.xml 
+```
+
+You should see:
+```xml 
+[CRETE] Awaiting connection on 'symdrive-svl.cs.pdx.edu' on port '10012' ...
+```
+This indicates you ran _crete-dispatch_ successfully and can now run _crete-vm-node_.
+
+#### 4.2.3 Running crete-vm-node
+In a separate terminal window, locate crete.vm-node.xml. It should be found under:
+```xml 
+/home/crete/crete-dev/image_template/vm-node/crete.vm-node.xml 
+```
+
+Run 
+```bash
+$ cd /home/crete/crete-dev/image_template/vm-node
+$ crete-vm-node -c crete.vm-node.xml 
+```
+You should see:
+```xml 
+[CRETE] Connecting to master 'localhost' on port '10012' ...
+reset()
+entering: QemuFSM_
+entering: Start
+...
+```
+This indicates you ran _crete-vm-node_ successfully and can now run _crete-svm-node_.
+
+#### 4.2.4 Running crete-svm-node
+In a separate terminal window, locate crete.svm-node.xml. It should be found under:
+```xml
+/home/crete/crete-dev/image_template/crete.svm-node.xml
+```
+Make sure the path node matches the path to your crete-klee-1.4.0
+```xml
+<path>
+	<symbolic>/home/crete-build/bin/crete-klee-1.4.0</symbolic>
+</path>
+```
+Run
+```bash
+$ cd /home/crete/crete-dev/image_template
+$ crete-svm-node -c crete.svm-node.xml 
+```
+
+You should see:
+```xml 
+[CRETE] Connecting to master 'localhost' on port '10012' ...
+entering: KleeFSM_
+entering: Start
+...
+```
+
+And then a bunch of tests will be ran, this process may take a couple of minutes to finish.
+
+
+__You've successfully run CRETE in Distributed Mode!__
+
+
+### 4.3 Executing CRETE Front-end on Guest OS and Back-end on the Host OS (Developer Mode)
+
+#### 4.3.1 Initiating CRETE and saving snapshot 
+
+__PLEASE SKIP THIS SECTION IF YOU ARE INSTEAD USING THE CRETE DOCKER IMAGE__
 
 On your guest OS, run 'crete-run' without any arguments:
 
@@ -464,81 +599,6 @@ $ q
 enter
 ```
 
-#### 4.2.3 Running crete-dispatch
-In a separate terminal window, locate crete.dispatch.xml. It should be found under:
-```xml 
-/home/crete/crete-dev/image_template/crete.dispatch.xml
-```
-
-Make sure the path node in crete.dispatch.xml:
-```xml 
-<path>/home/crete/crete-dev/image_template/vm_node/vm/1/crete.img</path>
-```
-matches the path to your crete.img
-
-Run 
-```bash
-crete-dispatch -c crete.dispatch.xml 
-```
-
-You should see:
-```xml 
-[CRETE] Awaiting connection on 'symdrive-svl.cs.pdx.edu' on port '10012' ...
-```
-This indicates you ran _crete-dispatch_ successfully and can now run _crete-vm-node_.
-
-#### 4.2.4 Running crete-vm-node
-In a separate terminal window, locate crete.vm-node.xml. It should be found under:
-```xml 
-/home/crete/crete-dev/image_template/vm-node/crete.vm-node.xml 
-```
-
-Run 
-```bash
-crete-vm-node -c crete.vm-node.xml 
-```
-You should see:
-```xml 
-[CRETE] Connecting to master 'localhost' on port '10012' ...
-reset()
-entering: QemuFSM_
-entering: Start
-...
-```
-This indicates you ran _crete-vm-node_ successfully and can now run _crete-svm-node_.
-
-#### 4.2.5 Running crete-svm-node
-In a separate terminal window, locate crete.svm-node.xml. It should be found under:
-```xml
-/home/crete/crete-dev/image_template/crete.svm-node.xml
-```
-Make sure the path node matches the path to your crete-klee-1.4.0
-```xml
-<path>
-	<symbolic>/home/crete-build/bin/crete-klee-1.4.0</symbolic>
-</path>
-```
-Run
-```bash
-crete-svm-node -c crete.svm-node.xml 
-```
-
-You should see:
-```xml 
-[CRETE] Connecting to master 'localhost' on port '10012' ...
-entering: KleeFSM_
-entering: Start
-...
-```
-
-And then a bunch of tests will be ran, this process may take a couple of minutes to finish.
-
-
-__You've successfully run CRETE in Distributed Mode!__
-
-
-### 4.3 Executing CRETE Front-end on Guest OS and Back-end on the Host OS (Developer Mode)
-
 On the guest OS, execute CRETE guest utility with the guest configuration file:
 ```bash
 $ crete-run -c crete.demo.echo.xml
@@ -550,7 +610,7 @@ CRETE back-end has three parts to be run on the host OS: _crete-vm-node_ for man
 _crete-svm-node_ for managing symbolic VM instances, and _crete-dispatch_ for
 coordinating the whole process.
 
-#### Running crete-dispatch
+#### 4.3.2 Running crete-dispatch
 A sample configuration file, _crete.dispatch.xml_, for _crete-dispatch_ is:
 ```xml
 <crete>
@@ -590,7 +650,7 @@ $ crete-dispatch -c crete.dispatch.xml
 ```
 *More information about the markup can be found in section 5
 
-#### Running crete-vm-node
+#### 4.3.3 Running crete-vm-node
 A sample configuration file, _crete.vm-node.xml_, for _crete-vm-node_ is:
 ```xml
 <crete>
@@ -608,7 +668,7 @@ be started from the same folder where the _crete-qemu_ was started):
 ```bash
 $ crete-vm-node -c crete.vm-node.xml
 ```
-#### Running crete-svm-node
+#### 4.3.4 Running crete-svm-node
 A sample configuration file, _crete.svm-node.xml_, for _crete-svm-node_ is:
 ```xml
 <crete>
@@ -628,6 +688,7 @@ Start _crete-svm-node_ with the sample configuration file:
 ```bash
 $ crete-svm-node -c crete.svm-node.xml
 ```
+
 
 ### 4.4 Collecting Results on the Host OS
 TBA
@@ -709,6 +770,8 @@ As mentioned earlier, CRETE can be ran in two modes:
 
 Below is a listing of the .xml files for both, respectively.
 
+#### Developer mode
+
 ```xml
 <crete>
     <mode>developer</mode>
@@ -787,7 +850,7 @@ This section describes how many tests to run and how long to wait to terminate m
 </test>
 ```
 
-### Running Distributed Mode
+#### Distributed Mode
 
 There will be some minor differences in the markup
 
@@ -838,7 +901,6 @@ We need to specify the path to our image. Our image will be specifically found i
 ```
 
 ```xml
-
 <image>
         <path>/home/crete/crete-dev/image_template/vm-node/vm/1/crete.img</path>
         <update>false</update>
