@@ -11,12 +11,12 @@
 	* [Operating System](#13-operating-system)
 * [2. Building CRETE](#2-building-crete)
 	* [Building CRETE with Docker](#21-building-crete-with-docker)
-		* [Install Docker](#install-docker)
-		* [Creating a CRETE Docker container and running CRETE](#creating-a-crete-docker-container)
+		* [Install Docker](#212-install-docker)
+		* [Creating a CRETE Docker container and running CRETE](#214creating-a-crete-docker-container)
 	* [Building CRETE locally](#22-building-crete-locally)
-		* [Dependencies](#dependencies)
-		* [Building](#building)
-		* [Miscellaneous Setup](#miscellaneous-setup)
+		* [Dependencies](#221-dependencies)
+		* [Building](#222-building)
+		* [Miscellaneous Setup](#223-miscellaneous-setup)
 * [3. Preparing the Guest Operating System](#3-preparing-the-guest-operating-system)
 	* [Create a QEMU Image](#31-create-a-qemu-image)
 	* [Install the Guest OS](#32-install-the-guest-os)
@@ -181,7 +181,7 @@ __Skip to section 5 for further explanation of the configuration files. The rest
 
 ### 2.2 Building CRETE locally
 
-#### Dependencies
+#### 2.2.1 Dependencies
 
 The following apt-get packages are required:
 ```bash
@@ -202,7 +202,7 @@ sudo apt-get update
 sudo apt-get install clang-3.4 llvm-3.4 llvm-3.4-dev llvm-3.4-tools
 ```
 
-#### Building
+#### 2.2.2 Building
 >#### Warning
 >
 > CRETE uses Boost 1.59.0. If any other version of Boost is installed on the system, there may be conflicts. It is recommended that you remove any conflicting Boost versions.
@@ -230,7 +230,7 @@ CXX=clang++-3.4 cmake ../crete-dev
 make # use -j to speedup
 ```
 
-#### Miscellaneous Setup
+#### 2.2.3 Miscellaneous Setup
 
 As documented on the STP and KLEE website, it is essential to set up the limit
 on open files and stack size. In most cases, the hard limit will have to be
