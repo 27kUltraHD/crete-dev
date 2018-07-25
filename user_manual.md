@@ -12,7 +12,8 @@
 * [2. Building CRETE](#2-building-crete)
 	* [Building CRETE with Docker](#21-building-crete-with-docker)
 		* [Install Docker](#212-install-docker)
-		* [Creating a CRETE Docker container and running CRETE](#214creating-a-crete-docker-container)
+		* [Creating a CRETE Docker container and running CRETE](#214-creating-a-crete-docker-container)
+		* [Starting the Docker container and running CRETE](#215-starting-the-docker-container-and-running-crete)
 	* [Building CRETE locally](#22-building-crete-locally)
 		* [Dependencies](#221-dependencies)
 		* [Building](#222-building)
@@ -29,7 +30,7 @@
 	* [Running CRETE in Distributed Mode](#42-running-crete-in-distributed-mode)
 	* [Collecting Results on the Host OS](#44-collecting-results-on-the-host-os)
 * [5. Configuration Options](#5-configuration-options)
-	* [Running Distributed Mode](#running-distributed-mode)
+	* [Running Distributed Mode](#distributed-mode)
 * [FAQ](#6-faq)
 
 ## 1. Prerequisites
