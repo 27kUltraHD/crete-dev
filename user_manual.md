@@ -49,8 +49,10 @@
 		* [5.2.2 Distributed Mode](#522-distributed-mode)
 	* [5.3 crete-vm-node configuration](#53-crete-vm-node-configuration)
 	* [5.4 crete-svm-node configuration](#53-crete-vm-node-configuration)
-	* [Running Distributed Mode](#distributed-mode)
-* [FAQ](#6-faq)
+* [6. FAQ](#6-faq)
+	* [6.1. Why is the VM not starting or misbehaving?](#61-why-is-the-vm-not-starting-or-misbehaving)
+    * [6.2. Why I can't switch to QEMU monitor by using ctrl+alt+2?](#62-why-i-cant-switch-to-qemu-monitor-by-using-ctrlalt2)
+    * [6.3. Why is "apt-get install build-essential" not working from the guest OS?](#63-why-is-apt-get-install-build-essential-not-working-from-the-guest-os)
 
 ## 1. Prerequisites
 ### 1.1. Terminology
@@ -117,7 +119,7 @@ $ docker run --name crete -ti --ulimit='stack=-1:-1' nhaison/crete
 
 You now have created a container named __crete__.
 
-Note that the ```--ulimit``` option sets an unlimited stack size inside the container. This is to avoid stack overflow issues when running CRETE.
+__Note that the ```--ulimit``` option sets an unlimited stack size inside the container. This is to avoid stack overflow issues when running CRETE.__
 
 If this worked correctly, your shell prompt will have changed and you will be the root user. Verifying the user should yield the following output:
 
@@ -231,11 +233,15 @@ sudo apt-get install clang-3.4 llvm-3.4 llvm-3.4-dev llvm-3.4-tools
 > CRETE requires a C++11 compatible compiler.
 > We recommend clang++-3.4 or g++-4.9 or higher versions of these compilers.
 
+__Please keep in mind that for the rest of the documentation, referring to the 'crete' folder will assume that you have installed it within your /home folder. If not, we suggest you to do so or make sure you know your file path__
+
 First, create the overall CRETE directory:
+
 ```bash
 mkdir crete
 cd crete
 ```
+The path to crete should be /home/crete
 
 Grab a copy of the source tree:
 ```bash
@@ -277,17 +283,17 @@ At this point, you're all set with building CRETE!
 ## 3. Preparing the Guest Operating System
 >#### Note
 > You may skip this section by using a prepared VM image
-  [crete-demo.img](http://svl13.cs.pdx.edu/crete-demo.img). This image has
+  [crete.img](http://svl13.cs.pdx.edu/crete.img). This image has
   Ubuntu-14.04.5-server-amd64 installed as the Guest OS along with all CRETE
   guest utilities.
 >
-> Root username: __test__
+> Root username: __crete__
 >
 > Password: __crete__
 
 The front-end of CRETE is an instrumented VM (crete-qemu). You need
 to setup a QEMU-compatible VM image to perform a certain test upon
-CRETE. To get the best performance, native QEMU with kvm enabled should be used for
+CRETE. To get the best performance, native QEMU with __kvm enabled__ should be used for
 all setups on the guest VM image. 
 
 Native qemu can be attained by compiling the source code provided on on the qemu website. In this user manual, native qemu commands will be signified with _native-qemu_ in place of _qemu_ to distinguish them from default qemu commands.
@@ -302,6 +308,9 @@ Where &lt;img-name&gt; is the desired name of your image, and &lt;img-size&gt;
 is the upper bound of how large the image can grow to in Gigabytes. See [this
 page](http://en.wikibooks.org/wiki/QEMU/Images#Creating_an_image) for more
 details.
+
+To follow this tutorial __effectively__, we suggest you to name your image __crete.img__
+
 
 ### 3.2. Install the Guest OS
 
@@ -342,7 +351,7 @@ $ sudo apt-get install build-essential cmake libelf-dev libcap2-bin -y
 Compile CRETE utilties on the guest OS. Ensure that the symbolic links within the _lib_ folder are retained during the copying process by using "scp -r" or "cp -Lr".
 
 ```bash
-$ scp -r <host-user-name>@10.0.2.2:</path/to/crete/front-end/guest> .
+$ scp -r <host-user-name>@10.0.2.2:</home/crete/crete-dev/front-end/guest> .
 $ mkdir guest-build
 $ cd guest-build
 $ cmake ../guest
